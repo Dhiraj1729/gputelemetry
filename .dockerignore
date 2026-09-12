@@ -1,0 +1,7 @@
+.git
+.DS_Store
+bin
+coverage
+work
+.env*
+Problemstatement/*.pdf

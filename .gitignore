@@ -1,0 +1,10 @@
+.DS_Store
+.env
+.env.*
+!.env.example
+bin/
+coverage/
+work/
+*.db
+*.db.lock
+*.log
