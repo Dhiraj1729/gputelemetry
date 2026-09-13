@@ -1,0 +1,66 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: {{ include "gpu.fullname" . }}-postgresql
+  labels:
+    {{- include "gpu.labels" . | nindent 4 }}
+spec:
+  serviceName: {{ include "gpu.fullname" . }}-postgresql
+  replicas: 1
+  selector:
+    matchLabels:
+      {{- include "gpu.selector" (dict "root" . "component" "postgresql") | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "gpu.selector" (dict "root" . "component" "postgresql") | nindent 8 }}
+    spec:
+      automountServiceAccountToken: false
+      terminationGracePeriodSeconds: 30
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 999
+        runAsGroup: 999
+        fsGroup: 999
+        fsGroupChangePolicy: OnRootMismatch
+        seccompProfile: {type: RuntimeDefault}
+      containers:
+        - name: postgresql
+          image: {{ .Values.postgresql.image | quote }}
+          imagePullPolicy: IfNotPresent
+          securityContext:
+            {{- include "gpu.containerSecurity" . | nindent 12 }}
+          args: ["postgres", "-c", "shared_buffers=64MB", "-c", "max_connections=80"]
+          ports: [{name: postgresql, containerPort: 5432}]
+          env:
+            - {name: POSTGRES_DB, value: {{ .Values.database.name | quote }}}
+            - {name: POSTGRES_USER, value: {{ .Values.database.username | quote }}}
+            - {name: PGDATA, value: /var/lib/postgresql/18/docker}
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "gpu.secret" . }}
+                  key: postgres-password
+          startupProbe:
+            exec: {command: ["pg_isready", "-h", "127.0.0.1", "-U", {{ .Values.database.username | quote }}, "-d", {{ .Values.database.name | quote }}]}
+            periodSeconds: 2
+            failureThreshold: 60
+          readinessProbe:
+            exec: {command: ["pg_isready", "-h", "127.0.0.1", "-U", {{ .Values.database.username | quote }}, "-d", {{ .Values.database.name | quote }}]}
+            periodSeconds: 5
+          livenessProbe:
+            tcpSocket: {port: postgresql}
+            periodSeconds: 10
+          resources:
+            {{- toYaml .Values.postgresql.resources | nindent 12 }}
+          volumeMounts:
+            - {name: data, mountPath: /var/lib/postgresql}
+            - {name: socket, mountPath: /var/run/postgresql}
+            - {name: tmp, mountPath: /tmp}
+      volumes:
+        - name: data
+          persistentVolumeClaim: {claimName: {{ include "gpu.fullname" . }}-postgresql-data}
+        - name: socket
+          emptyDir: {sizeLimit: 16Mi}
+        - name: tmp
+          emptyDir: {sizeLimit: 32Mi}

@@ -1,0 +1,65 @@
+# Fresh installs deliberately bootstrap the DB first. make helm-install performs
+# both phases; normal upgrades must keep bootstrapOnly=false.
+bootstrapOnly: true
+images:
+  repository: gpu-telemetry
+  tag: dev
+  pullPolicy: IfNotPresent
+imagePullSecrets: []
+database:
+  existingSecret: ""
+  # Local development only: generate a random password, retain/reuse the Secret.
+  # No password appears in values. Disable this when supplying existingSecret.
+  developmentSecret: true
+  name: telemetry
+  username: telemetry
+postgresql:
+  image: postgres:18.6@sha256:4ef4dbc939d61acea57712655ddb4b4ab27419c913f94cca0cd57cb3ea3c2280
+  storage:
+    size: 2Gi
+    storageClass: ""
+  resources:
+    requests: {cpu: 100m, memory: 128Mi}
+    limits: {cpu: "1", memory: 512Mi}
+queue:
+  replicas: 1
+  capacity: 1000
+  dedupCapacity: 10000
+  quarantineCapacity: 100
+  maxLogicalBytes: 67108864
+  leaseDuration: 30s
+  completionTTL: 1h
+  storage:
+    size: 1Gi
+    storageClass: ""
+  resources:
+    requests: {cpu: 50m, memory: 64Mi}
+    limits: {cpu: "1", memory: 256Mi}
+streamer:
+  replicas: 1
+  rate: 10
+  count: 0
+  resources:
+    requests: {cpu: 25m, memory: 32Mi}
+    limits: {cpu: 250m, memory: 128Mi}
+collector:
+  replicas: 1
+  workers: 2
+  poolMax: 4
+  workTimeout: 10s
+  resources:
+    requests: {cpu: 50m, memory: 64Mi}
+    limits: {cpu: 500m, memory: 256Mi}
+api:
+  replicas: 1
+  poolMax: 4
+  maxConcurrent: 4
+  maxResponseBytes: 67108864
+  tempSize: 384Mi
+  resources:
+    requests: {cpu: 50m, memory: 64Mi, ephemeral-storage: 64Mi}
+    limits: {cpu: 500m, memory: 256Mi, ephemeral-storage: 512Mi}
+migrate:
+  resources:
+    requests: {cpu: 25m, memory: 32Mi}
+    limits: {cpu: 250m, memory: 128Mi}

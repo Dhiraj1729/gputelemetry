@@ -1,0 +1,138 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "bootstrapOnly": {
+      "type": "boolean"
+    },
+    "images": {
+      "type": "object",
+      "properties": {
+        "repository": {
+          "type": "string",
+          "minLength": 1
+        },
+        "tag": {
+          "type": "string",
+          "minLength": 1
+        },
+        "pullPolicy": {
+          "enum": [
+            "IfNotPresent",
+            "Always",
+            "Never"
+          ]
+        }
+      }
+    },
+    "database": {
+      "type": "object",
+      "properties": {
+        "username": {
+          "type": "string",
+          "pattern": "^[A-Za-z_][A-Za-z0-9_]*$"
+        },
+        "name": {
+          "type": "string",
+          "pattern": "^[A-Za-z_][A-Za-z0-9_]*$"
+        },
+        "existingSecret": {
+          "type": "string"
+        },
+        "developmentSecret": {
+          "type": "boolean"
+        }
+      },
+      "additionalProperties": false
+    },
+    "queue": {
+      "type": "object",
+      "properties": {
+        "replicas": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 1
+        },
+        "capacity": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 10000
+        },
+        "dedupCapacity": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 100000
+        },
+        "quarantineCapacity": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 100000
+        }
+      }
+    },
+    "streamer": {
+      "type": "object",
+      "properties": {
+        "replicas": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 10
+        },
+        "rate": {
+          "type": "number",
+          "minimum": 0.001,
+          "maximum": 1000000
+        },
+        "count": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "collector": {
+      "type": "object",
+      "properties": {
+        "replicas": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 10
+        },
+        "workers": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 10
+        },
+        "poolMax": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 10
+        }
+      }
+    },
+    "api": {
+      "type": "object",
+      "properties": {
+        "replicas": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 10
+        },
+        "poolMax": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 10
+        },
+        "maxConcurrent": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 16
+        },
+        "maxResponseBytes": {
+          "type": "integer",
+          "minimum": 2,
+          "maximum": 1073741824
+        }
+      }
+    }
+  }
+}

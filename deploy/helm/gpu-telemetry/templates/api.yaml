@@ -1,0 +1,65 @@
+{{- if not .Values.bootstrapOnly }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "gpu.fullname" . }}-api
+  labels:
+    {{- include "gpu.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.api.replicas }}
+  strategy:
+    type: RollingUpdate
+    rollingUpdate: {maxSurge: 1, maxUnavailable: 0}
+  selector:
+    matchLabels:
+      {{- include "gpu.selector" (dict "root" . "component" "api") | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "gpu.selector" (dict "root" . "component" "api") | nindent 8 }}
+    spec:
+      automountServiceAccountToken: false
+      terminationGracePeriodSeconds: 30
+      securityContext:
+        {{- include "gpu.podSecurity" . | nindent 8 }}
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      containers:
+        - name: api
+          image: {{ include "gpu.image" (dict "root" . "component" "api") }}
+          imagePullPolicy: {{ .Values.images.pullPolicy }}
+          securityContext:
+            {{- include "gpu.containerSecurity" . | nindent 12 }}
+          args:
+            - '--listen=:8080'
+            - '--pool-max={{ .Values.api.poolMax }}'
+            - '--max-concurrent={{ .Values.api.maxConcurrent }}'
+            - '--max-response-bytes={{ .Values.api.maxResponseBytes | int64 }}'
+            - '--temp-dir=/tmp'
+            - '--shutdown-timeout=20s'
+          env:
+            {{- include "gpu.databaseEnv" . | nindent 12 }}
+          ports: [{name: http, containerPort: 8080}]
+          startupProbe:
+            httpGet: {path: /healthz, port: http}
+            periodSeconds: 2
+            failureThreshold: 30
+          livenessProbe:
+            httpGet: {path: /healthz, port: http}
+            periodSeconds: 10
+            timeoutSeconds: 2
+          readinessProbe:
+            httpGet: {path: /readyz, port: http}
+            periodSeconds: 5
+            timeoutSeconds: 2
+          resources:
+            {{- toYaml .Values.api.resources | nindent 12 }}
+          volumeMounts:
+            - {name: tmp, mountPath: /tmp}
+      volumes:
+        - name: tmp
+          emptyDir:
+            sizeLimit: {{ .Values.api.tempSize }}
+{{- end }}

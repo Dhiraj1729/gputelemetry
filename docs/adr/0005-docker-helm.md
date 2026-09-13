@@ -1,0 +1,13 @@
+# ADR 0005: five image targets and one two-phase Helm chart
+
+Status: packaging implemented and statically checked; image builds and Minikube runtime verification remain blocked in the agent environment.
+
+Use one multi-stage Dockerfile with shared cached compilation and five independent final images: queue, streamer, collector, api, migrate. The dedicated migration target follows the Day 5 reference, superseding the earlier optional suggestion to bundle migrate with collector. Pin Go 1.27.1 Bookworm, distroless static Debian 13 nonroot, and official PostgreSQL 18.6 by registry index digest. Static Linux ARM64 compilation is verified separately from container execution.
+
+Use one chart and a two-phase first install because a pre-install migration cannot depend on ordinary PostgreSQL resources that do not yet exist. Bootstrap creates and waits for PostgreSQL/credentials/storage; the same release is then upgraded to full mode, with the requested pre-upgrade migration hook completing before apps are created. The Job carries both pre-install/pre-upgrade annotations; a direct full-mode fresh install without prerequisites is unsupported. Subsequent full upgrades run the idempotent migration hook first. Hook-only or destructive-recreate PostgreSQL designs were avoided so database infrastructure remains ordinarily managed and upgradeable by Helm.
+
+Queue is a one-replica StatefulSet with a durable PVC. PostgreSQL has its own one-replica StatefulSet/PVC. Streamer/collector/API are Deployments. Stable labels drive selectors; Service DNS provides discovery; no pod IP/localhost cross-workload addresses are used. Queue and PostgreSQL use headless internal ClusterIP-type Services. There is no public Ingress.
+
+Default random credentials are clearly development-only, generated in a Secret and reused with lookup. An existing Secret is supported. No password goes in images/build arguments/ordinary values. Generated Secret and standalone PVCs have keep annotations; namespace deletion or volume/node loss is outside that retention guarantee. Authentication/credential rotation and PostgreSQL major-version upgrades are not automated.
+
+Non-root security contexts, PVC fsGroup ownership, API temporary storage, health/readiness, explicit resources and 30-second termination grace package existing application requirements without changing behavior. Static chart tests check these relationships and scaling guards. Local scripts implement build/load, bootstrap/full install, verification and two-replica streamer/collector scaling. The queue remains one. No throughput, HA or successful deployment claim follows from chart lint/render alone.

@@ -1,0 +1,12 @@
+{{ if .Values.bootstrapOnly }}
+Database bootstrap phase only. Wait for PostgreSQL, then complete installation:
+  helm upgrade {{ .Release.Name }} deploy/helm/gpu-telemetry -n {{ .Release.Namespace }} --reuse-values --set bootstrapOnly=false --wait --timeout 5m
+Prefer make helm-install: it runs both phases with an explicit Kubernetes context.
+{{ else }}
+Pipeline installed. API access:
+  kubectl -n {{ .Release.Namespace }} port-forward service/{{ include "gpu.fullname" . }}-api 8080:8080
+  curl -fsS http://127.0.0.1:8080/api/v1/gpus
+Migration evidence: kubectl -n {{ .Release.Namespace }} logs job/{{ include "gpu.fullname" . }}-migrate
+{{ end }}
+Queue replicas are fixed at one. PVCs and generated database credentials are retained on uninstall.
+Do not delete the namespace if you intend to retain those resources.

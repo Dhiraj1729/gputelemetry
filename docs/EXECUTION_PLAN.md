@@ -223,19 +223,20 @@ Keep tests and the AI record current every day. Do not postpone all Helm work un
 
 The supplied PDF and CSV are the project-specific evidence. External documentation supports tool behavior; architecture choices and resource budgets above are recommendations, not requirements copied from the PDF.
 
-## Actual setup status at handoff
+## Implementation status — 12 September 2026
 
-Completed: all three PDF pages read and visually reviewed; CSV profiled; hardware and tools audited; 32 bootstrap/scaffold files created while preserving Problemstatement/; three shell scripts passed bash -n.
+Day 1 is complete and regression-tested. Day 2 is now implemented: a bbolt-backed single broker, persisted publisher deduplication, leased delivery, ACK/NACK, bounded capacity/cleanup, restart recovery, and a lease-aware diagnostic consumer. The original streamer/event/publish contract is preserved. Destructive receive is isolated in explicit memory mode.
 
-Not completed: Apple Command Line Tools, Homebrew, Go, Colima/Docker, Minikube, kubectl, Helm installation; Go/image/Helm smoke tests; application code; Git initialization.
+Build, vet, unit tests, race detector, coverage and real-process crash/restart demos passed. Detailed evidence and commands are in docs/DAY2_VERIFICATION.md, the README and docs/DAY2_PROTOCOL.md. No application deployment or Git commit was performed.
 
-Blocker: xcode-select --install reported that no developer tools were found and an installer could not be requested because no UI was available. The computer-use tool rejected Terminal access for safety reasons. The user must initiate the Apple installer from their own Terminal.
+Day 3 collector/PostgreSQL implementation and user-run integration verification are complete (docs/DAY3_VERIFICATION.md). See the Day 4 update below for API/OpenAPI status. Docker/Helm packaging and later scaling/performance work remain outstanding. The broker is durable only as far as its surviving local storage; replication/high availability, lease renewal, live compaction and quarantine operator tooling are not implemented.
 
-Run xcode-select --install in Terminal and complete the installer. Then install Homebrew using https://brew.sh (initial setup may require local administrator authentication). After that, from the project directory run:
 
-```sh
-bash scripts/install-tools.sh
-bash scripts/cluster-up.sh
-```
+## Day 4 implementation update
 
-An official Homebrew installer was downloaded into the chat scratch directory for inspection but was not executed. No application tool installation or cluster readiness is claimed.
+Day 3's remaining gate passed in the user's Mac Terminal on PostgreSQL 18.6, as recorded in docs/DAY3_VERIFICATION.md. Day 4 now implements the read-only Go/Huma API, PostgreSQL visitor queries, inclusive timestamp bounds, complete disk-buffered JSON arrays, health/readiness, configuration and generated OpenAPI with freshness checking. Build, vet, unit/race checks and Day 1/Day 2 process regressions passed. Real Day 4 PostgreSQL integration is pending the agent environment's unavailable Docker context; see docs/DAY4_VERIFICATION.md. Dockerfiles/Helm and later scaling/performance work remain outstanding.
+
+
+## Day 5 packaging update — 13 September 2026
+
+Day 4's real PostgreSQL gate passed in the user's Terminal, recorded in docs/DAY4_VERIFICATION.md. Day 5 adds five image targets and a single Helm chart with two-phase database bootstrap/full deployment, pre-upgrade migrations, retained PVCs/Secret and build/load/install/verify/scale scripts. No application semantics or schema changed. Static chart validation and Linux ARM64 compilation passed; Docker image builds, local installation and live scaling remain unverified because the agent environment cannot resolve the user's Docker/Kubernetes contexts. See docs/DAY5_VERIFICATION.md. Day 6 performance and broader failure testing remain outstanding.

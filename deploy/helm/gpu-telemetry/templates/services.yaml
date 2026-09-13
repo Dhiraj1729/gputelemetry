@@ -1,0 +1,23 @@
+{{- range $component, $port := dict "postgresql" 5432 "queue" 8081 "collector" 8082 "api" 8080 }}
+{{- if or (eq $component "postgresql") (not $.Values.bootstrapOnly) }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "gpu.fullname" $ }}-{{ $component }}
+  labels:
+    {{- include "gpu.labels" $ | nindent 4 }}
+spec:
+  type: ClusterIP
+  {{- if or (eq $component "queue") (eq $component "postgresql") }}
+  # Stable StatefulSet DNS; still an internal ClusterIP-type Service.
+  clusterIP: None
+  {{- end }}
+  ports:
+    - name: {{ if eq $component "postgresql" }}postgresql{{ else }}http{{ end }}
+      port: {{ $port }}
+      targetPort: {{ $port }}
+  selector:
+    {{- include "gpu.selector" (dict "root" $ "component" $component) | nindent 4 }}
+{{- end }}
+{{- end }}

@@ -1,0 +1,65 @@
+{{- if not .Values.bootstrapOnly }}
+{{- if ne (int .Values.queue.replicas) 1 }}{{ fail "queue.replicas must be exactly one; broker replication is not implemented" }}{{ end }}
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: {{ include "gpu.fullname" . }}-queue
+  labels:
+    {{- include "gpu.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.queue.replicas }}
+  serviceName: {{ include "gpu.fullname" . }}-queue
+  selector:
+    matchLabels:
+      {{- include "gpu.selector" (dict "root" . "component" "queue") | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "gpu.selector" (dict "root" . "component" "queue") | nindent 8 }}
+    spec:
+      automountServiceAccountToken: false
+      terminationGracePeriodSeconds: 30
+      securityContext:
+        {{- include "gpu.podSecurity" . | nindent 8 }}
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      containers:
+        - name: queue
+          image: {{ include "gpu.image" (dict "root" . "component" "queue") }}
+          imagePullPolicy: {{ .Values.images.pullPolicy }}
+          securityContext:
+            {{- include "gpu.containerSecurity" . | nindent 12 }}
+          args:
+            - '--listen=:8081'
+            - '--db=/var/lib/gpu-telemetry/queue.db'
+            - '--mode=durable'
+            - '--shutdown-timeout=20s'
+            - '--capacity={{ .Values.queue.capacity }}'
+            - '--dedup-capacity={{ .Values.queue.dedupCapacity }}'
+            - '--quarantine-capacity={{ .Values.queue.quarantineCapacity }}'
+            - '--max-logical-bytes={{ .Values.queue.maxLogicalBytes | int64 }}'
+            - '--lease-duration={{ .Values.queue.leaseDuration }}'
+            - '--completion-ttl={{ .Values.queue.completionTTL }}'
+          ports: [{name: http, containerPort: 8081}]
+          startupProbe:
+            httpGet: {path: /healthz, port: http}
+            periodSeconds: 2
+            failureThreshold: 30
+          livenessProbe:
+            httpGet: {path: /healthz, port: http}
+            periodSeconds: 10
+            timeoutSeconds: 2
+          readinessProbe:
+            httpGet: {path: /healthz, port: http}
+            periodSeconds: 5
+            timeoutSeconds: 2
+          resources:
+            {{- toYaml .Values.queue.resources | nindent 12 }}
+          volumeMounts:
+            - {name: data, mountPath: /var/lib/gpu-telemetry}
+      volumes:
+        - name: data
+          persistentVolumeClaim: {claimName: {{ include "gpu.fullname" . }}-queue-data}
+{{- end }}

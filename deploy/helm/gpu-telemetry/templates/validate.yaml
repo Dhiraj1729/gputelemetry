@@ -1,0 +1,3 @@
+{{- if lt (int .Values.queue.dedupCapacity) (int .Values.queue.capacity) }}
+{{- fail "queue.dedupCapacity must be at least queue.capacity" }}
+{{- end }}

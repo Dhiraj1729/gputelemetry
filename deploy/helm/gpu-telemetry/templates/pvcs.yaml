@@ -1,0 +1,22 @@
+{{- range $component := list "postgresql" "queue" }}
+{{- $settings := index $.Values $component }}
+{{- if or (eq $component "postgresql") (not $.Values.bootstrapOnly) }}
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ include "gpu.fullname" $ }}-{{ $component }}-data
+  annotations:
+    helm.sh/resource-policy: keep
+  labels:
+    {{- include "gpu.labels" $ | nindent 4 }}
+spec:
+  accessModes: [ReadWriteOnce]
+  {{- if $settings.storage.storageClass }}
+  storageClassName: {{ $settings.storage.storageClass | quote }}
+  {{- end }}
+  resources:
+    requests:
+      storage: {{ $settings.storage.size }}
+{{- end }}
+{{- end }}

@@ -8,3 +8,9 @@ work/
 *.db
 *.db.lock
 *.log
+
+# Private interview materials and local discussion/reference prompts.
+/Problemstatement/*
+!/Problemstatement/dcgm_metrics_20250718_134233.csv
+/docs/prompts/*
+!/docs/prompts/.gitkeep
