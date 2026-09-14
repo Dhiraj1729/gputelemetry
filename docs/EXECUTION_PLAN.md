@@ -1,5 +1,7 @@
 # GPU telemetry pipeline: requirements, design, and execution plan
 
+Current status: see [submission audit](SUBMISSION_AUDIT.md) and [Day 6 evidence](DAY6_VERIFICATION.md). The dated plan and implementation updates below are historical.
+
 Prepared 11 September 2026. Implementation starts Saturday 12 September. This is a proposed design and schedule, not a claim that the applications are implemented.
 
 ## Recommendation
