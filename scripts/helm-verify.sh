@@ -2,7 +2,7 @@
 set -euo pipefail
 cd "$(dirname "$0")/.."
 release="${RELEASE:-gpu-telemetry}"
-namespace="${NAMESPACE:-gpu-telemetry-day5}"
+namespace="${NAMESPACE:-gpu-telemetry}"
 context="${KUBE_CONTEXT:-gpu-telemetry}"
 api_port="${LOCAL_API_PORT:-18080}"
 queue_port="${LOCAL_QUEUE_PORT:-18081}"
@@ -15,9 +15,9 @@ for app in postgresql queue; do [[ $("${k[@]}" get pvc "$release-$app-data" -o j
 "${k[@]}" get pods,jobs,services,pvc -l "app.kubernetes.io/instance=$release"
 "${k[@]}" logs "job/$release-migrate"
 mkdir -p work
-"${k[@]}" port-forward "service/$release-api" "$api_port:8080" >work/day5-api-port-forward.log 2>&1 &
+"${k[@]}" port-forward "service/$release-api" "$api_port:8080" >work/verification-api-port-forward.log 2>&1 &
 api_pid=$!
-"${k[@]}" port-forward "service/$release-queue" "$queue_port:8081" >work/day5-queue-port-forward.log 2>&1 &
+"${k[@]}" port-forward "service/$release-queue" "$queue_port:8081" >work/verification-queue-port-forward.log 2>&1 &
 queue_pid=$!
 trap 'kill "$api_pid" "$queue_pid" 2>/dev/null || true; wait "$api_pid" "$queue_pid" 2>/dev/null || true' EXIT
 for ((i=0; i<60; i++)); do
@@ -39,16 +39,16 @@ for ((i=0; i<60; i++)); do
 done
 [[ "$progress" == true ]] || { echo 'No new persisted/ACKed events observed within 60 seconds' >&2; exit 1; }
 for ((i=0; i<60; i++)); do
- curl -fsS "http://127.0.0.1:$api_port/api/v1/gpus" >work/day5-gpus.json
- if jq -e 'length > 0' work/day5-gpus.json >/dev/null; then break; fi
+ curl -fsS "http://127.0.0.1:$api_port/api/v1/gpus" >work/verification-gpus.json
+ if jq -e 'length > 0' work/verification-gpus.json >/dev/null; then break; fi
  sleep 1
 done
-uuid=$(jq -er '.[0].uuid' work/day5-gpus.json)
+uuid=$(jq -er '.[0].uuid' work/verification-gpus.json)
 uuid_encoded=$(jq -rn --arg id "$uuid" '$id|@uri')
-curl -fsS "http://127.0.0.1:$api_port/api/v1/gpus/$uuid_encoded/telemetry" >work/day5-telemetry.json
-jq -e 'length > 0' work/day5-telemetry.json >/dev/null
-curl -fsS "http://127.0.0.1:$queue_port/internal/v1/stats" >work/day5-queue-stats.json
-jq -e '.acked > 0' work/day5-queue-stats.json >/dev/null
+curl -fsS "http://127.0.0.1:$api_port/api/v1/gpus/$uuid_encoded/telemetry" >work/verification-telemetry.json
+jq -e 'length > 0' work/verification-telemetry.json >/dev/null
+curl -fsS "http://127.0.0.1:$queue_port/internal/v1/stats" >work/verification-queue-stats.json
+jq -e '.acked > 0' work/verification-queue-stats.json >/dev/null
 "${k[@]}" exec "$release-postgresql-0" -- sh -c 'psql -U "$POSTGRES_USER" -d "$POSTGRES_DB" -v ON_ERROR_STOP=1 -c "SELECT count(*) AS events, count(DISTINCT event_id) AS unique_events FROM telemetry"'
 "${k[@]}" logs "deployment/$release-streamer" --tail=5
 "${k[@]}" logs "deployment/$release-collector" --tail=5

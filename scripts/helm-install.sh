@@ -2,7 +2,7 @@
 set -euo pipefail
 cd "$(dirname "$0")/.."
 release="${RELEASE:-gpu-telemetry}"
-namespace="${NAMESPACE:-gpu-telemetry-day5}"
+namespace="${NAMESPACE:-gpu-telemetry}"
 context="${KUBE_CONTEXT:-gpu-telemetry}"
 repo="${IMAGE_REPOSITORY:-gpu-telemetry}"
 tag="${IMAGE_TAG:-dev}"

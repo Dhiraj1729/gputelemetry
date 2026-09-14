@@ -32,7 +32,10 @@ import (
 func TestDay3Postgres(t *testing.T) {
 	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Minute)
 	defer cancel()
-	dc := os.Getenv("DAY3_DOCKER_CONTEXT")
+	dc := os.Getenv("DOCKER_CONTEXT")
+	if dc == "" {
+		dc = os.Getenv("DAY3_DOCKER_CONTEXT")
+	}
 	if dc == "" {
 		dc = "colima-gpu-telemetry"
 	}
@@ -45,7 +48,10 @@ func TestDay3Postgres(t *testing.T) {
 		}
 		return strings.TrimSpace(string(b))
 	}
-	image := os.Getenv("DAY3_POSTGRES_IMAGE")
+	image := os.Getenv("POSTGRES_IMAGE")
+	if image == "" {
+		image = os.Getenv("DAY3_POSTGRES_IMAGE")
+	}
 	if image == "" {
 		image = "postgres:18"
 	}

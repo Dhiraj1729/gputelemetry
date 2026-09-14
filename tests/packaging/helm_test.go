@@ -224,8 +224,11 @@ func TestValuesOverridesAndGuards(t *testing.T) {
 
 // Stub only CLI transport; this verifies orchestration, not Kubernetes readiness.
 func TestInstallerPhases(t *testing.T) {
-	for _, existing := range []string{"false", "true"} {
-		t.Run(existing, func(t *testing.T) {
+	for _, tc := range []struct{ existing, namespace string }{
+		{"false", ""}, {"true", ""}, {"true", "gpu-telemetry-day5"},
+	} {
+		existing := tc.existing
+		t.Run(existing+"/"+tc.namespace, func(t *testing.T) {
 			temp := t.TempDir()
 			calls := filepath.Join(temp, "calls")
 			helm := `#!/usr/bin/env bash
@@ -245,8 +248,8 @@ printf 'kubectl %s\n' "$*" >> "$FAKE_CALLS"
 					t.Fatal(err)
 				}
 			}
-			cmd := exec.Command("bash", "../../scripts/day5-install.sh")
-			cmd.Env = append(os.Environ(), "PATH="+temp+string(os.PathListSeparator)+os.Getenv("PATH"), "FAKE_CALLS="+calls, "FAKE_EXISTING="+existing, "RELEASE=gpu-telemetry", "VALUES_FILE=")
+			cmd := exec.Command("bash", "../../scripts/helm-install.sh")
+			cmd.Env = append(os.Environ(), "PATH="+temp+string(os.PathListSeparator)+os.Getenv("PATH"), "FAKE_CALLS="+calls, "FAKE_EXISTING="+existing, "RELEASE=gpu-telemetry", "VALUES_FILE=", "NAMESPACE="+tc.namespace)
 			if b, err := cmd.CombinedOutput(); err != nil {
 				t.Fatalf("simulated installer: %v %s", err, b)
 			}
@@ -255,6 +258,18 @@ printf 'kubectl %s\n' "$*" >> "$FAKE_CALLS"
 				t.Fatal(err)
 			}
 			text := string(b)
+			namespace := tc.namespace
+			if namespace == "" {
+				namespace = "gpu-telemetry"
+			}
+			for _, line := range strings.Split(strings.TrimSpace(text), "\n") {
+				if strings.Contains(line, "cluster-info") {
+					continue
+				}
+				if !strings.Contains(line, "-n "+namespace+" ") {
+					t.Fatalf("command did not target selected namespace %q: %s", namespace, line)
+				}
+			}
 			install := strings.Index(text, "helm install")
 			upgrade := strings.Index(text, "helm upgrade")
 			ready := strings.Index(text, "rollout status statefulset/gpu-telemetry-postgresql")

@@ -1,7 +1,7 @@
 GO ?= go
 .PHONY: help doctor tools cluster-up cluster-down build test race coverage vet fmt integration demo
 help:
-	@echo 'Development: build test race coverage vet fmt integration demo demo-day2 demo-day3 migrate postgres-up openapi check-openapi demo-day4'
+	@echo 'Development: build test race coverage vet fmt integration demo test-queue-recovery test-collector-integration migrate postgres-up openapi check-openapi test-api-integration'
 	@echo 'Packaging: docker-build minikube-load helm-check helm-template helm-install helm-verify helm-scale helm-package'
 	@echo 'Environment: doctor tools cluster-up cluster-down'
 doctor:
@@ -38,29 +38,29 @@ integration:
 	$(GO) test -count=1 -tags=integration -v ./tests/system
 demo: integration
 
-.PHONY: demo-day2
-demo-day2:
+.PHONY: test-queue-recovery
+test-queue-recovery:
 	$(GO) test -count=1 -tags=integration -run TestDay2CrashRestart -v ./tests/system
 
-.PHONY: migrate demo-day3
+.PHONY: migrate test-collector-integration
 migrate:
 	$(GO) run ./cmd/migrate
-demo-day3:
+test-collector-integration:
 	$(GO) test -count=1 -tags=postgres_integration -v ./tests/day3
 
 .PHONY: postgres-up
 postgres-up:
 	bash scripts/postgres-up.sh
 
-.PHONY: openapi check-openapi demo-day4
+.PHONY: openapi check-openapi test-api-integration
 openapi:
 	$(GO) run ./cmd/openapi
 check-openapi:
 	$(GO) run ./cmd/openapi --check
-demo-day4:
+test-api-integration:
 	$(GO) test -count=1 -tags=postgres_integration -v ./tests/day4
 
-# Day 5 local packaging (no image pushes or implicit Git operations).
+# Local packaging (no image pushes or implicit Git operations).
 IMAGE_REPOSITORY ?= gpu-telemetry
 IMAGE_TAG ?= dev
 PLATFORM ?= linux/arm64
@@ -68,27 +68,33 @@ DOCKER_CONTEXT ?= colima-gpu-telemetry
 MINIKUBE_PROFILE ?= gpu-telemetry
 KUBE_CONTEXT ?= gpu-telemetry
 RELEASE ?= gpu-telemetry
-NAMESPACE ?= gpu-telemetry-day5
+NAMESPACE ?= gpu-telemetry
 export IMAGE_REPOSITORY IMAGE_TAG PLATFORM DOCKER_CONTEXT MINIKUBE_PROFILE KUBE_CONTEXT RELEASE NAMESPACE
 .PHONY: docker-build minikube-load helm-check helm-template helm-install helm-verify helm-scale
 docker-build:
-	bash scripts/day5-images.sh build
+	bash scripts/images.sh build
 minikube-load:
-	bash scripts/day5-images.sh load
+	bash scripts/images.sh load
 helm-check:
 	helm lint deploy/helm/gpu-telemetry
 	$(GO) test -count=1 -tags=packaging -v ./tests/packaging
 helm-template:
 	mkdir -p work
-	helm template $(RELEASE) deploy/helm/gpu-telemetry -n $(NAMESPACE) --set bootstrapOnly=false --set database.existingSecret=render-only-secret > work/day5-rendered.yaml
+	helm template $(RELEASE) deploy/helm/gpu-telemetry -n $(NAMESPACE) --set bootstrapOnly=false --set database.existingSecret=render-only-secret > work/helm-rendered.yaml
 helm-install:
-	bash scripts/day5-install.sh
+	bash scripts/helm-install.sh
 helm-verify:
-	bash scripts/day5-verify.sh
+	bash scripts/helm-verify.sh
 helm-scale:
-	bash scripts/day5-scale.sh
+	bash scripts/helm-scale.sh
 
 .PHONY: helm-package
 helm-package:
 	mkdir -p work/charts
 	helm package deploy/helm/gpu-telemetry --destination work/charts
+
+# Compatibility aliases for commands recorded in historical test evidence.
+.PHONY: demo-day2 demo-day3 demo-day4
+demo-day2: test-queue-recovery
+demo-day3: test-collector-integration
+demo-day4: test-api-integration

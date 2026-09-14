@@ -103,10 +103,10 @@ There is no separate dashboard/application UI. The generated spec can also be im
 
 ```sh
 make build vet test race coverage openapi check-openapi demo
-make demo-day4
+make test-api-integration
 ```
 
-Day 4's real PostgreSQL suite uses a unique test-owned upstream PostgreSQL container and random loopback port, populates only that isolated database, and checks ordering, no-orphan GPU listing, exact inclusive boundaries, offsets, sub-microsecond comparisons, filtered-empty/unknown GPU behavior, malformed ranges, read-only sessions, database lock timeout, actual API executable/SIGTERM and database outage responses. Cleanup affects only the test-owned container. Override DAY4_DOCKER_CONTEXT or DAY4_POSTGRES_IMAGE when needed. No production database URL is used by this suite.
+Day 4's real PostgreSQL suite uses a unique test-owned upstream PostgreSQL container and random loopback port, populates only that isolated database, and checks ordering, no-orphan GPU listing, exact inclusive boundaries, offsets, sub-microsecond comparisons, filtered-empty/unknown GPU behavior, malformed ranges, read-only sessions, database lock timeout, actual API executable/SIGTERM and database outage responses. Cleanup affects only the test-owned container. Override DOCKER_CONTEXT or POSTGRES_IMAGE when needed. No production database URL is used by this suite.
 
 See DAY4_VERIFICATION.md for actual results. Unit coverage does not include real PostgreSQL integration or subprocess execution. Day 5 Dockerfiles/Helm and later live scaling/performance work remain outstanding. No retention/deletion policy, authentication or write API was introduced.
 

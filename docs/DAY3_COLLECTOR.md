@@ -72,7 +72,7 @@ make build
 make migrate
 ```
 
-The postgres-up script starts only the upstream database image, with a 512MiB limit, one CPU, loopback port 15432 and named volume gpu-telemetry-postgres18. PostgreSQL 18 uses /var/lib/postgresql as the volume mount. It preserves an existing managed container. It does not start Minikube. DAY3_DOCKER_CONTEXT selects another Docker context; DAY3_POSTGRES_IMAGE can select an explicit compatible image digest. Test evidence will record the actual image used.
+The postgres-up script starts only the upstream database image, with a 512MiB limit, one CPU, loopback port 15432 and named volume gpu-telemetry-postgres18. PostgreSQL 18 uses /var/lib/postgresql as the volume mount. It preserves an existing managed container. It does not start Minikube. DOCKER_CONTEXT selects another Docker context; POSTGRES_IMAGE can select an explicit compatible image digest. Test evidence will record the actual image used.
 
 In three terminals from the repository:
 
@@ -103,10 +103,10 @@ Stop streamers, then collectors and broker with Ctrl-C. To stop local PostgreSQL
 
 ```sh
 make build vet test race coverage demo
-make demo-day3
+make test-collector-integration
 ```
 
-The first line includes the Day 1/Day 2 regression suite and new collector unit tests. demo-day3 requires a working Docker daemon and builds real collector/streamer binaries. It creates a uniquely named disposable PostgreSQL container, random loopback port and isolated broker database; cleanup removes only that test-owned container, never the manual PostgreSQL volume. A missing daemon is a test failure, not a silent skip.
+The first line includes the Day 1/Day 2 regression suite and new collector unit tests. test-collector-integration requires a working Docker daemon and builds real collector/streamer binaries. It creates a uniquely named disposable PostgreSQL container, random loopback port and isolated broker database; cleanup removes only that test-owned container, never the manual PostgreSQL volume. A missing daemon is a test failure, not a silent skip.
 
 The Day 3 suite covers migration reruns, normal queue-to-database persistence, concurrent duplicate inserts, metadata ordering, full transaction rollback, database lock timeout/no ACK and recovery, quarantine, real collector SIGKILL after commit with ACK blocked, and actual CSV streamer/collector operation with clean SIGTERM. Unit tests additionally cover ACK response retry without another insert, stale ACK, invalid-event quarantine, acquisition errors, bounded workers and drain deadlines, configuration precedence, health and credential-safe help.
 

@@ -1,5 +1,7 @@
 # Day 5: Docker images and Helm packaging
 
+Current command names and defaults are shown below. Existing installations must keep their original namespace; see [naming migration](NAMING_MIGRATION.md) before running commands. Historical execution evidence remains in the verification documents.
+
 The chart packages the existing applications without changing queue semantics, API contracts, collector behavior or database schema. The reference requests a dedicated migrate image, so there are **five custom images**, plus upstream PostgreSQL.
 
 ## Build inputs and image selection
@@ -60,16 +62,16 @@ make helm-verify
 make helm-scale
 ```
 
-The intended release is **gpu-telemetry**, namespace **gpu-telemetry-day5**, context **gpu-telemetry**. Override RELEASE/NAMESPACE/KUBE_CONTEXT explicitly when needed. Release names are limited to 40 characters to avoid truncated-name collisions. No namespace deletion or automatic failure rollback is performed.
+The intended release is **gpu-telemetry**, namespace **gpu-telemetry**, context **gpu-telemetry**. Override RELEASE/NAMESPACE/KUBE_CONTEXT explicitly when needed. Release names are limited to 40 characters to avoid truncated-name collisions. No namespace deletion or automatic failure rollback is performed.
 
 Equivalent initial commands:
 
 ```sh
 helm install gpu-telemetry deploy/helm/gpu-telemetry \
-  --kube-context gpu-telemetry -n gpu-telemetry-day5 --create-namespace \
+  --kube-context gpu-telemetry -n gpu-telemetry --create-namespace \
   --set bootstrapOnly=true --wait --timeout 5m
 helm upgrade gpu-telemetry deploy/helm/gpu-telemetry \
-  --kube-context gpu-telemetry -n gpu-telemetry-day5 --reuse-values \
+  --kube-context gpu-telemetry -n gpu-telemetry --reuse-values \
   --set bootstrapOnly=false --wait --timeout 5m
 ```
 
@@ -79,7 +81,7 @@ For normal upgrades:
 
 ```sh
 helm upgrade gpu-telemetry deploy/helm/gpu-telemetry \
-  --kube-context gpu-telemetry -n gpu-telemetry-day5 --reuse-values \
+  --kube-context gpu-telemetry -n gpu-telemetry --reuse-values \
   --set bootstrapOnly=false --set-string images.tag=v1.0.1 --wait --timeout 5m
 ```
 
@@ -107,8 +109,8 @@ StorageClass is omitted by default to select Minikube's default class. Override 
 Both PVCs and the generated Secret carry helm.sh/resource-policy: keep. Uninstall stops/removes managed workloads while retaining those resources:
 
 ```sh
-helm uninstall gpu-telemetry --kube-context gpu-telemetry -n gpu-telemetry-day5
-kubectl --context gpu-telemetry -n gpu-telemetry-day5 get pvc,secret
+helm uninstall gpu-telemetry --kube-context gpu-telemetry -n gpu-telemetry
+kubectl --context gpu-telemetry -n gpu-telemetry get pvc,secret
 ```
 
 Do not delete the namespace, Minikube profile or retained PVCs when retaining data. Keep the same release name/namespace and compatible settings for reinstall. The latest migration hook Job may also remain after uninstall; hooks are not ordinary release-managed resources. No automated purge is supplied. PVC retention is not backup and does not protect against node/VM/volume loss or manual namespace deletion. Pod restart/uninstall retention has not been claimed as runtime-verified until the local deployment checks pass.
@@ -136,18 +138,18 @@ Helm rendering examples use an existing-secret placeholder so generated password
 
 ```sh
 make helm-template
-# Inspect work/day5-rendered.yaml; render-only-secret is a placeholder, not runnable credentials.
+# Inspect work/helm-rendered.yaml; render-only-secret is a placeholder, not runnable credentials.
 ```
 
 ## Inspect, access and verify
 
 ```sh
-kubectl --context gpu-telemetry -n gpu-telemetry-day5 get pods,jobs,services,pvc
-kubectl --context gpu-telemetry -n gpu-telemetry-day5 logs job/gpu-telemetry-migrate
-kubectl --context gpu-telemetry -n gpu-telemetry-day5 logs deployment/gpu-telemetry-streamer --tail=20
-kubectl --context gpu-telemetry -n gpu-telemetry-day5 logs deployment/gpu-telemetry-collector --tail=20
-kubectl --context gpu-telemetry -n gpu-telemetry-day5 logs statefulset/gpu-telemetry-queue --tail=20
-kubectl --context gpu-telemetry -n gpu-telemetry-day5 port-forward service/gpu-telemetry-api 8080:8080
+kubectl --context gpu-telemetry -n gpu-telemetry get pods,jobs,services,pvc
+kubectl --context gpu-telemetry -n gpu-telemetry logs job/gpu-telemetry-migrate
+kubectl --context gpu-telemetry -n gpu-telemetry logs deployment/gpu-telemetry-streamer --tail=20
+kubectl --context gpu-telemetry -n gpu-telemetry logs deployment/gpu-telemetry-collector --tail=20
+kubectl --context gpu-telemetry -n gpu-telemetry logs statefulset/gpu-telemetry-queue --tail=20
+kubectl --context gpu-telemetry -n gpu-telemetry port-forward service/gpu-telemetry-api 8080:8080
 ```
 
 In another terminal:
@@ -161,17 +163,17 @@ curl -fsS "http://127.0.0.1:8080/api/v1/gpus/$GPU_UUID/telemetry" | jq
 curl -fsS http://127.0.0.1:8080/openapi.json >/dev/null
 ```
 
-`make helm-verify` checks bound PVCs, ready workloads, successful migration, queue replicas=1, advancing PostgreSQL row and queue ACK counts, and nonempty API results. It uses its own port-forwards on 18080/18081 and stops only those processes afterward. Override LOCAL_API_PORT/LOCAL_QUEUE_PORT if occupied. Verification requires active continuous streamers and collectors. It saves evidence under work/day5-*.json/log and prints database row/unique-ID counts. Default queue retention/capacity are unchanged: a sustained long run can exhaust the retained-ID budget and apply backpressure; that is not a packaging throughput guarantee.
+`make helm-verify` checks bound PVCs, ready workloads, successful migration, queue replicas=1, advancing PostgreSQL row and queue ACK counts, and nonempty API results. It uses its own port-forwards on 18080/18081 and stops only those processes afterward. Override LOCAL_API_PORT/LOCAL_QUEUE_PORT if occupied. Verification requires active continuous streamers and collectors. It saves evidence under work/verification-*.json/log and prints database row/unique-ID counts. Default queue retention/capacity are unchanged: a sustained long run can exhaust the retained-ID budget and apply backpressure; that is not a packaging throughput guarantee.
 
 `make helm-scale` upgrades streamer/collector to two replicas, runs verification, then restores their initial replica counts through Helm. It checks that queue remains one. If a check fails, the script stops for investigation rather than claiming success or silently resetting a failed deployment. Manual equivalent:
 
 ```sh
 helm upgrade gpu-telemetry deploy/helm/gpu-telemetry --kube-context gpu-telemetry \
- -n gpu-telemetry-day5 --reuse-values --set bootstrapOnly=false \
+ -n gpu-telemetry --reuse-values --set bootstrapOnly=false \
  --set streamer.replicas=2 --set collector.replicas=2 --wait --timeout 5m
 # Restore the initial one-replica defaults after the check:
 helm upgrade gpu-telemetry deploy/helm/gpu-telemetry --kube-context gpu-telemetry \
- -n gpu-telemetry-day5 --reuse-values --set bootstrapOnly=false \
+ -n gpu-telemetry --reuse-values --set bootstrapOnly=false \
  --set streamer.replicas=1 --set collector.replicas=1 --wait --timeout 5m
 ```
 

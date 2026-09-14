@@ -27,11 +27,17 @@ import (
 func TestDay4Postgres(t *testing.T) {
 	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Minute)
 	defer cancel()
-	dc := os.Getenv("DAY4_DOCKER_CONTEXT")
+	dc := os.Getenv("DOCKER_CONTEXT")
+	if dc == "" {
+		dc = os.Getenv("DAY4_DOCKER_CONTEXT")
+	}
 	if dc == "" {
 		dc = "colima-gpu-telemetry"
 	}
-	image := os.Getenv("DAY4_POSTGRES_IMAGE")
+	image := os.Getenv("POSTGRES_IMAGE")
+	if image == "" {
+		image = os.Getenv("DAY4_POSTGRES_IMAGE")
+	}
 	if image == "" {
 		image = "postgres:18"
 	}

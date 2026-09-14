@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
-context="${DAY3_DOCKER_CONTEXT:-colima-gpu-telemetry}"
-image="${DAY3_POSTGRES_IMAGE:-postgres:18}"
+context="${DOCKER_CONTEXT:-${DAY3_DOCKER_CONTEXT:-colima-gpu-telemetry}}"
+image="${POSTGRES_IMAGE:-${DAY3_POSTGRES_IMAGE:-postgres:18}}"
 name=gpu-telemetry-postgres
 if ! docker --context "$context" info >/dev/null 2>&1; then
   echo "Start the existing VM with: colima start gpu-telemetry" >&2
@@ -9,14 +9,14 @@ if ! docker --context "$context" info >/dev/null 2>&1; then
 fi
 if docker --context "$context" container inspect "$name" >/dev/null 2>&1; then
   role=$(docker --context "$context" inspect --format '{{ index .Config.Labels "io.gpu-telemetry.role" }}' "$name")
-  if [[ "$role" != postgres-day3 ]]; then
+  if [[ "$role" != postgres-dev && "$role" != postgres-day3 ]]; then
     echo "Existing container $name is not managed by this script; refusing to change it." >&2
     exit 1
   fi
   docker --context "$context" start "$name"
 else
   docker --context "$context" run -d --name "$name" \
-    --label io.gpu-telemetry.role=postgres-day3 \
+    --label io.gpu-telemetry.role=postgres-dev \
     --memory 512m --cpus 1 \
     -p 127.0.0.1:15432:5432 \
     -e POSTGRES_DB=telemetry -e POSTGRES_USER=telemetry \

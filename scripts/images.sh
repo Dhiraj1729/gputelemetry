@@ -22,5 +22,5 @@ case "${1:-}" in
     DOCKER_CONTEXT="$context" minikube -p "$profile" image load --daemon "$repo/$app:$tag"
   done
   ;;
- *) echo 'Usage: bash scripts/day5-images.sh build|load' >&2; exit 1;;
+ *) echo 'Usage: bash scripts/images.sh build|load' >&2; exit 1;;
 esac

@@ -47,6 +47,17 @@ Internet access is required for initial dependencies and image pulls. The bootst
 
 Historical tested versions: Go 1.27.1, Colima 0.10.3, Docker CLI 29.8.0, Minikube 1.39.0, Kubernetes/kubectl 1.37.0, Helm 4.3.0. Homebrew installs available versions rather than locking that entire toolchain. Image references are pinned in the Dockerfile and chart.
 
+## Existing installations
+
+The default namespace for new installations is now `gpu-telemetry`. If you already have a deployment, select its namespace before running install, verify, or scale commands:
+
+```sh
+helm list --kube-context gpu-telemetry --all-namespaces
+export NAMESPACE=YOUR_EXISTING_NAMESPACE
+```
+
+Replace the placeholder with the namespace shown for your release. This preserves the existing release, PVCs and data. Kubernetes namespaces are not renamed by changing a script default. Omitting this override on an older installation would target a separate stack. For manual `kubectl` examples below, replace `-n gpu-telemetry` with `-n "$NAMESPACE"` when using an existing namespace. See [naming migration notes](docs/NAMING_MIGRATION.md) for the previous namespace and command mappings.
+
 ## From a fresh clone to running pods
 
 Run commands in the repository root. A public HTTPS clone does not require SSH setup:
@@ -127,7 +138,7 @@ make helm-package
 make helm-install
 ```
 
-The chart is [deploy/helm/gpu-telemetry](deploy/helm/gpu-telemetry). Rendered inspection output goes to `work/day5-rendered.yaml` and the packaged chart to `work/charts/`. The inspection manifest references a placeholder Secret and is not intended for `kubectl apply`.
+The chart is [deploy/helm/gpu-telemetry](deploy/helm/gpu-telemetry). Rendered inspection output goes to `work/helm-rendered.yaml` and the packaged chart to `work/charts/`. The inspection manifest references a placeholder Secret and is not intended for `kubectl apply`.
 
 **Use `make helm-install` for the initial installation.** It performs two phases:
 
@@ -136,16 +147,16 @@ The chart is [deploy/helm/gpu-telemetry](deploy/helm/gpu-telemetry). Rendered in
 
 A plain `helm install` with default values intentionally deploys only the bootstrap phase. Normal upgrades must keep `bootstrapOnly=false`. The installer handles this automatically.
 
-Defaults are release `gpu-telemetry`, namespace `gpu-telemetry-day5`, and context `gpu-telemetry`. The namespace name is retained for compatibility; it does not limit this to a development day. Expect five Running application/database pods at baseline and one Completed migration pod. PVC requests are 1 GiB for the queue and 2 GiB for PostgreSQL.
+Defaults are release `gpu-telemetry`, namespace `gpu-telemetry`, and context `gpu-telemetry`. Expect five Running application/database pods at baseline and one Completed migration pod. PVC requests are 1 GiB for the queue and 2 GiB for PostgreSQL.
 
 ### 6. Verify the deployment
 
 ```sh
 make helm-verify
-kubectl --context gpu-telemetry -n gpu-telemetry-day5 get pods,jobs,services,pvc
+kubectl --context gpu-telemetry -n gpu-telemetry get pods,jobs,services,pvc
 ```
 
-The verifier checks rollouts, migration completion, bound PVCs, API health/readiness, increasing database rows and ACK counts, non-empty API responses, and one queue replica. Its final line begins `PASS:`. It saves API responses and queue statistics in `work/day5-*.json`; counts vary with runtime.
+The verifier checks rollouts, migration completion, bound PVCs, API health/readiness, increasing database rows and ACK counts, non-empty API responses, and one queue replica. Its final line begins `PASS:`. It saves API responses and queue statistics in `work/verification-*.json`; counts vary with runtime.
 
 The verifier starts its own port-forwards on **18080 and 18081**. Stop your manual forwards before running it, or use unused ports:
 
@@ -158,7 +169,7 @@ LOCAL_API_PORT=18090 LOCAL_QUEUE_PORT=18091 make helm-verify
 In terminal A, leave this running:
 
 ```sh
-kubectl --context gpu-telemetry -n gpu-telemetry-day5 \
+kubectl --context gpu-telemetry -n gpu-telemetry \
   port-forward service/gpu-telemetry-api 18080:8080
 ```
 
@@ -196,13 +207,13 @@ There is no pagination or hidden row limit. Responses are prepared row by row in
 | `scripts/install-tools.sh` | `make tools` | Install Homebrew dependencies and connect Buildx |
 | `scripts/doctor.sh` | `make doctor` | Check installed tools and print versions |
 | `scripts/cluster-up.sh` | `make cluster-up` | Start the named Colima VM and Minikube cluster |
-| `scripts/day5-images.sh` | `make docker-build`, `make minikube-load` | Build five targets or load them into Minikube |
-| `scripts/day5-install.sh` | `make helm-install` | Bootstrap PostgreSQL, migrate and install/upgrade applications |
-| `scripts/day5-verify.sh` | `make helm-verify` | Verify live ingestion, persistence and API access |
-| `scripts/day5-scale.sh` | `make helm-scale` | Exercise two producer/consumer replicas and restore on success |
+| `scripts/images.sh` | `make docker-build`, `make minikube-load` | Build five targets or load them into Minikube |
+| `scripts/helm-install.sh` | `make helm-install` | Bootstrap PostgreSQL, migrate and install/upgrade applications |
+| `scripts/helm-verify.sh` | `make helm-verify` | Verify live ingestion, persistence and API access |
+| `scripts/helm-scale.sh` | `make helm-scale` | Exercise two producer/consumer replicas and restore on success |
 | `scripts/postgres-up.sh` | `make postgres-up` | Optional standalone Docker database for native Go development; not needed for Helm installation |
 
-The `day5-` script names are retained so existing commands keep working. `make cluster-down` invokes Minikube and Colima directly; there is no separate shutdown script.
+`make cluster-down` invokes Minikube and Colima directly; there is no separate shutdown script.
 
 ## Configuration and other environments
 
@@ -215,7 +226,7 @@ Chart settings and resource budgets are in [values.yaml](deploy/helm/gpu-telemet
 | `DOCKER_CONTEXT` | `colima-gpu-telemetry` | Image build/load source daemon |
 | `MINIKUBE_PROFILE` | `gpu-telemetry` | Image load destination |
 | `KUBE_CONTEXT` | `gpu-telemetry` | Installation and verification cluster |
-| `RELEASE` / `NAMESPACE` | `gpu-telemetry` / `gpu-telemetry-day5` | Helm release and namespace |
+| `RELEASE` / `NAMESPACE` | `gpu-telemetry` / `gpu-telemetry` | Helm release and namespace |
 | `VALUES_FILE` | unset | Installer values overrides |
 | `LOCAL_API_PORT` / `LOCAL_QUEUE_PORT` | `18080` / `18081` | Verifier port-forwards |
 
@@ -254,8 +265,8 @@ Stopping preserves local storage. Do not delete the namespace, PVCs or Minikube 
 | Docker daemon unavailable | Run `make cluster-up`; check `docker --context colima-gpu-telemetry info` |
 | `ImagePullBackOff` | Run `make minikube-load`; verify image tags and architecture match the chart |
 | Only PostgreSQL exists | Complete both install phases with `make helm-install` |
-| Migration fails | Read `kubectl --context gpu-telemetry -n gpu-telemetry-day5 logs job/gpu-telemetry-migrate`; preserve data while investigating |
-| Verifier says `kill: ... No such process` | Inspect `work/day5-*-port-forward.log`; stop conflicting manual forwards or choose unused verifier ports |
+| Migration fails | Read `kubectl --context gpu-telemetry -n gpu-telemetry logs job/gpu-telemetry-migrate`; preserve data while investigating |
+| Verifier says `kill: ... No such process` | Inspect `work/verification-*-port-forward.log`; stop conflicting manual forwards or choose unused verifier ports |
 | Brief publish retries during startup/restart | Check queue readiness and subsequent ACK/database progress; persistent retries require investigation |
 | Publication stalls after a longer run | Queue deduplication capacity includes unexpired completed IDs (default 10,000 for one hour). Backpressure can occur even with ready=0. Inspect statistics and plan capacity/retention settings before longer or higher-rate tests |
 | Pods Pending | Inspect pod events, resource requests and PVC binding; reduce workload scale if the laptop lacks headroom |
@@ -266,12 +277,12 @@ Stopping preserves local storage. Do not delete the namespace, PVCs or Minikube 
 | --- | --- |
 | `make test`, `make race`, `make vet`, `make coverage` | Unit checks, race detector, static analysis, coverage report |
 | `make integration` | Real-process queue/streamer tests; no Kubernetes needed |
-| `make demo-day3`, `make demo-day4` | Isolated real PostgreSQL tests; running Docker context required |
+| `make test-collector-integration`, `make test-api-integration` | Isolated real PostgreSQL tests; running Docker context required |
 | `make helm-check` | Chart lint and packaging regression tests |
 | `make openapi`, `make check-openapi` | Generate/check the typed OpenAPI contract without a database |
 | `make helm-verify` | Live cluster ingestion and API verification |
 
-[Day 6 evidence audit](docs/DAY6_VERIFICATION.md) records deployment, 3/3 scaling, backlog drainage, restarts and API checks. Recorded unit coverage is 69.2%; PostgreSQL integration coverage is not merged into that figure. TC03 and TC06 reruns passed on 14 September 2026. TC05 (10/10) and the final clean-clone build/deployment/video remain pending. Raw artifacts are held separately by the author; the public audit is a summary, not a bundled test transcript.
+[Acceptance test evidence](docs/DAY6_VERIFICATION.md) records deployment, 3/3 scaling, backlog drainage, restarts and API checks. Recorded unit coverage is 69.2%; PostgreSQL integration coverage is not merged into that figure. TC03 and TC06 reruns passed on 14 September 2026. TC05 (10/10) and the final clean-clone build/deployment/video remain pending. Raw artifacts are held separately by the author; the public audit is a summary, not a bundled test transcript.
 
 No broker replication, automatic scaling/HPA, authentication, UI, lease renewal or automatic telemetry retention is implemented. Services use internal ClusterIP access; the walkthrough exposes the API locally through port-forwarding.
 
