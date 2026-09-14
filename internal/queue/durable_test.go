@@ -516,3 +516,69 @@ func TestBackgroundCleanupAndPendingCancellation(t *testing.T) {
 		t.Fatal("poll ignored cancellation")
 	}
 }
+
+// Compare accounting to persisted records rather than only to other counters.
+func TestCompletionAccountingMatchesRetainedRecords(t *testing.T) {
+	d, c := fixture(t, func(o *DurableOptions) {
+		o.Capacity = 1
+		o.DedupCapacity = 4
+		o.CleanupBatch = 1
+	})
+	check := func(want int) {
+		t.Helper()
+		s, err := d.Snapshot(bg)
+		if err != nil {
+			t.Fatal(err)
+		}
+		count, indexed := 0, 0
+		if err := d.view(bg, func(tx *bolt.Tx) error {
+			if err := tx.Bucket(records).ForEach(func(_, value []byte) error {
+				var record diskRecord
+				if err := json.Unmarshal(value, &record); err != nil {
+					return err
+				}
+				if record.State == "completed" {
+					count++
+				}
+				return nil
+			}); err != nil {
+				return err
+			}
+			return tx.Bucket(completions).ForEach(func(_, _ []byte) error { indexed++; return nil })
+		}); err != nil {
+			t.Fatal(err)
+		}
+		if s.Completed != want || count != want || indexed != want {
+			t.Fatalf("want %d completions; counter=%d records=%d index=%d", want, s.Completed, count, indexed)
+		}
+	}
+	for i := 1; i <= 4; i++ {
+		publish(t, d, fmt.Sprintf("completion-%d", i))
+		e := lease(t, d)
+		ack(t, d, e)
+		check(i)
+		if dup, err := d.Ack(bg, AckRequest{e.Event.EventID, e.Token}); err != nil || !dup {
+			t.Fatalf("duplicate ACK: duplicate=%v err=%v", dup, err)
+		}
+		check(i)
+	}
+	if _, err := d.Publish(event("after-capacity")); !errors.Is(err, ErrDedupFull) {
+		t.Fatalf("exact dedup capacity should reject new identity: %v", err)
+	}
+	check(4)
+	d = reopen(t, d)
+	check(4)
+	c.add(time.Minute)
+	for remaining := 3; remaining >= 0; remaining-- {
+		if err := d.Cleanup(bg); err != nil {
+			t.Fatal(err)
+		}
+		check(remaining)
+	}
+	// Expiry releases all identity slots, allowing another full capacity cycle.
+	for i := 1; i <= 4; i++ {
+		publish(t, d, fmt.Sprintf("after-expiry-%d", i))
+		ack(t, d, lease(t, d))
+		check(i)
+	}
+}
