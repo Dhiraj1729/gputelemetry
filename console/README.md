@@ -8,6 +8,8 @@ The server binds only to loopback, chooses an available port, and requires a ses
 
 The current console supports the fixed `gpu-telemetry` cluster, release, and namespace used by the repository defaults. Deployment settings expose replica overrides only. Blank settings use defaults for a fresh release and retain prior settings on upgrades. The temporary override does not change the chart. The GPU explorer displays tables and raw responses with optional polling. Pipeline badges record this console session’s actions; use Refresh cluster status to inspect live workloads.
 
+GPU Explorer: load GPUs, select a host and its GPU ID, then fetch telemetry. The default range is the last 15 minutes of **processed time**, with 1/5-minute presets and a custom local-time range. Choose a metric and the latest 25/50/100 readings (default 50). Cards show the latest value per metric within the fetched window; selecting one metric shows a trend when at least two readings exist. Expand device/record details or the raw response for full fields, including the original CSV source timestamp. Optional refresh runs every 10 seconds while Explorer is visible. If a short window is empty, widen it to cover the CSV replay cycle. Metric and row limits affect the display; the API still returns all records in the selected time window.
+
 Close the browser without stopping workloads. Press Ctrl-C in the launcher’s Terminal window to exit the console and stop its owned port-forward.
 
 ## Cleanup options
