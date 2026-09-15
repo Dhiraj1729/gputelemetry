@@ -58,6 +58,12 @@ export NAMESPACE=YOUR_EXISTING_NAMESPACE
 
 Replace the placeholder with the namespace shown for your release. This preserves the existing release, PVCs and data. Kubernetes namespaces are not renamed by changing a script default. Omitting this override on an older installation would target a separate stack. For manual `kubectl` examples below, replace `-n gpu-telemetry` with `-n "$NAMESPACE"` when using an existing namespace. See [naming migration notes](docs/NAMING_MIGRATION.md) for the previous namespace and command mappings.
 
+## Local deployment UI
+
+The included macOS UI automates local environment preparation and deployment, and provides a basic view of the API data. After downloading or cloning the repository, open the project folder and double-click **`Start Console.command`**. The launcher starts the bundled console, detects the repository path and opens the UI in your browser. Apple Command Line Tools and Homebrew must be installed separately; the UI checks whether they are available.
+
+From the UI you can install the project tools, start Colima and Minikube, build and load the images, choose up to 10 streamer and collector replicas, deploy with Helm, verify the running pipeline, connect to the API and browse telemetry by GPU. It also provides options to stop while retaining data, remove the deployment and its data, or remove the complete project environment. Use the execution log in the UI to follow each operation and investigate failures. The command-line workflow below remains available.
+
 ## From a fresh clone to running pods
 
 Run commands in the repository root. A public HTTPS clone does not require SSH setup:

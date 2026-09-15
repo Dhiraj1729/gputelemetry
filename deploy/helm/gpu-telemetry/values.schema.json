@@ -74,6 +74,7 @@
       "type": "object",
       "properties": {
         "replicas": {
+          "description": "Maximum 10 streamer replicas allowed. Zero pauses streaming when configured directly through Helm.",
           "type": "integer",
           "minimum": 0,
           "maximum": 10
@@ -93,6 +94,7 @@
       "type": "object",
       "properties": {
         "replicas": {
+          "description": "Maximum 10 collector replicas allowed. Zero pauses collection when configured directly through Helm.",
           "type": "integer",
           "minimum": 0,
           "maximum": 10

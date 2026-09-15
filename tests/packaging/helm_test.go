@@ -214,10 +214,19 @@ func TestValuesOverridesAndGuards(t *testing.T) {
 	if nested(find(t, docs, "PersistentVolumeClaim", "gpu-test-queue-data"), "spec", "storageClassName") != "custom" {
 		t.Fatal("storage override")
 	}
-	for _, setting := range []string{"queue.replicas=2", "queue.dedupCapacity=1", "database.password=forbidden-in-values", "collector.workers=11", "database.developmentSecret=false", "streamer.rate=0", "api.poolMax=11"} {
+	for _, setting := range []string{"streamer.replicas=11", "collector.replicas=11", "queue.replicas=2", "queue.dedupCapacity=1", "database.password=forbidden-in-values", "collector.workers=11", "database.developmentSecret=false", "streamer.rate=0", "api.poolMax=11"} {
 		cmd := exec.Command("helm", "template", "bad", "../../deploy/helm/gpu-telemetry", "--set", setting)
 		if err := cmd.Run(); err == nil {
 			t.Fatal("unsafe setting accepted", setting)
+		}
+	}
+}
+
+func TestMaximumReplicaCounts(t *testing.T) {
+	docs := render(t, "bootstrapOnly=false", "database.existingSecret=existing-database", "streamer.replicas=10", "collector.replicas=10")
+	for _, component := range []string{"streamer", "collector"} {
+		if nested(find(t, docs, "Deployment", "gpu-test-"+component), "spec", "replicas") != 10 {
+			t.Fatalf("%s must allow 10 replicas", component)
 		}
 	}
 }
