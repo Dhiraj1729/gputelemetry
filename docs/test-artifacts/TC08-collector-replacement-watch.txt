@@ -1,0 +1,7 @@
+NAME                                       READY   STATUS      RESTARTS   AGE
+gpu-telemetry-api-6fbd895b64-g5phw         1/1     Running     0          10m
+gpu-telemetry-collector-85b6879c97-m7kpx   1/1     Running     0          7s
+gpu-telemetry-migrate-kv5b9                0/1     Completed   0          10m
+gpu-telemetry-postgresql-0                 1/1     Running     0          10m
+gpu-telemetry-queue-0                      1/1     Running     0          4m39s
+gpu-telemetry-streamer-cbff6c649-cw68z     1/1     Running     0          10m

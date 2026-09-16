@@ -1,0 +1,422 @@
+Script started on Sun Sep 13 22:16:47 2026
+Restored session: Sun Sep 13 20:18:49 IST 2026
+[1m[7m%[27m[1m[0m                                                                                                                        ]7;file://Dhirajs-MacBook-Air.local/Users/dhirajsriharsha/Preparation/ProjectMsgQueue[0m[27m[24m[Jdhirajsriharsha@Dhirajs-MacBook-Air ProjectMsgQueue % [K[?2004h[7mmake docker-build[27m[17D[27mm[27ma[27mk[27me[27m [27md[27mo[27mc[27mk[27me[27mr[27m-[27mb[27mu[27mi[27ml[27md[?2004l
+bash scripts/day5-images.sh build
+[1A[1B[0G[?25l[+] Building 0.0s (0/1)                                                                     docker:colima-gpu-telemetry
+[?25h[1A[0G[?25l[+] Building 0.2s (1/2)                                                                     docker:colima-gpu-telemetry
+[34m => [internal] load build definition from Dockerfile                                                               0.0s
+[0m[34m => => transferring dockerfile: 1.94kB                                                                             0.0s
+[0m => resolve image config for docker-image://docker.io/docker/dockerfile:1                                          0.2s
+[?25h[1A[1A[1A[1A[0G[?25l[+] Building 0.3s (1/2)                                                                     docker:colima-gpu-telemetry
+[34m => [internal] load build definition from Dockerfile                                                               0.0s
+[0m[34m => => transferring dockerfile: 1.94kB                                                                             0.0s
+[0m => resolve image config for docker-image://docker.io/docker/dockerfile:1                                          0.3s
+[?25h[1A[1A[1A[1A[0G[?25l[+] Building 0.5s (1/2)                                                                     docker:colima-gpu-telemetry
+[34m => [internal] load build definition from Dockerfile                                                               0.0s
+[0m[34m => => transferring dockerfile: 1.94kB                                                                             0.0s
+[0m => resolve image config for docker-image://docker.io/docker/dockerfile:1                                          0.5s
+[?25h[1A[1A[1A[1A[0G[?25l[+] Building 0.6s (1/2)                                                                     docker:colima-gpu-telemetry
+[34m => [internal] load build definition from Dockerfile                                                               0.0s
+[0m[34m => => transferring dockerfile: 1.94kB                                                                             0.0s
+[0m => resolve image config for docker-image://docker.io/docker/dockerfile:1                                          0.6s
+[?25h[1A[1A[1A[1A[0G[?25l[+] Building 0.8s (1/2)                                                                     docker:colima-gpu-telemetry
+[34m => [internal] load build definition from Dockerfile                                                               0.0s
+[0m[34m => => transferring dockerfile: 1.94kB                                                                             0.0s
+[0m => resolve image config for docker-image://docker.io/docker/dockerfile:1                                          0.8s
+[?25h[1A[1A[1A[1A[0G[?25l[+] Building 0.9s (1/2)                                                                     docker:colima-gpu-telemetry
+[34m => [internal] load build definition from Dockerfile                                                               0.0s
+[0m[34m => => transferring dockerfile: 1.94kB                                                                             0.0s
+[0m => resolve image config for docker-image://docker.io/docker/dockerfile:1                                          0.9s
+[?25h[1A[1A[1A[1A[0G[?25l[+] Building 1.1s (1/2)                                                                     docker:colima-gpu-telemetry
+[34m => [internal] load build definition from Dockerfile                                                               0.0s
+[0m[34m => => transferring dockerfile: 1.94kB                                                                             0.0s
+[0m => resolve image config for docker-image://docker.io/docker/dockerfile:1                                          1.1s
+[?25h[1A[1A[1A[1A[0G[?25l[+] Building 1.2s (1/2)                                                                     docker:colima-gpu-telemetry
+[34m => [internal] load build definition from Dockerfile                                                               0.0s
+[0m[34m => => transferring dockerfile: 1.94kB                                                                             0.0s
+[0m => resolve image config for docker-image://docker.io/docker/dockerfile:1                                          1.2s
+[?25h[1A[1A[1A[1A[0G[?25l[+] Building 1.4s (1/2)                                                                     docker:colima-gpu-telemetry
+[34m => [internal] load build definition from Dockerfile                                                               0.0s
+[0m[34m => => transferring dockerfile: 1.94kB                                                                             0.0s
+[0m => resolve image config for docker-image://docker.io/docker/dockerfile:1                                          1.4s
+[?25h[1A[1A[1A[1A[0G[?25l[+] Building 1.5s (1/2)                                                                     docker:colima-gpu-telemetry
+[34m => [internal] load build definition from Dockerfile                                                               0.0s
+[0m[34m => => transferring dockerfile: 1.94kB                                                                             0.0s
+[0m => resolve image config for docker-image://docker.io/docker/dockerfile:1                                          1.5s
+[?25h[1A[1A[1A[1A[0G[?25l[+] Building 1.6s (2/2)                                                                     docker:colima-gpu-telemetry
+[34m => [internal] load build definition from Dockerfile                                                               0.0s
+[0m[34m => => transferring dockerfile: 1.94kB                                                                             0.0s
+[0m[34m => resolve image config for docker-image://docker.io/docker/dockerfile:1                                          1.6s
+[0m[?25h[1A[1A[1A[1A[0G[?25l[+] Building 1.8s (3/5)                                                                     docker:colima-gpu-telemetry
+[34m => [internal] load build definition from Dockerfile                                                               0.0s
+[0m[34m => => transferring dockerfile: 1.94kB                                                                             0.0s
+[0m[34m => resolve image config for docker-image://docker.io/docker/dockerfile:1                                          1.6s
+[0m[34m => CACHED docker-image://docker.io/docker/dockerfile:1@sha256:ecfaec9ed6d810b56388c508f4121597bfbba70d41a6dfeee4  0.0s
+[0m[34m => => resolve docker.io/docker/dockerfile:1@sha256:ecfaec9ed6d810b56388c508f4121597bfbba70d41a6dfeee4d8cad5f295f  0.0s
+[0m => [internal] load metadata for docker.io/library/golang:1.27.1-bookworm@sha256:648f440f42a0958804efb24df176f806  0.2s
+ => [internal] load metadata for gcr.io/distroless/static-debian13:nonroot@sha256:1c2c046bc09ed40fad370b599a0b1ae  0.2s
+[?25h[1A[1A[1A[1A[1A[1A[1A[1A[0G[?25l[+] Building 2.0s (3/5)                                                                     docker:colima-gpu-telemetry
+[34m => [internal] load build definition from Dockerfile                                                               0.0s
+[0m[34m => => transferring dockerfile: 1.94kB                                                                             0.0s
+[0m[34m => resolve image config for docker-image://docker.io/docker/dockerfile:1                                          1.6s
+[0m[34m => CACHED docker-image://docker.io/docker/dockerfile:1@sha256:ecfaec9ed6d810b56388c508f4121597bfbba70d41a6dfeee4  0.0s
+[0m[34m => => resolve docker.io/docker/dockerfile:1@sha256:ecfaec9ed6d810b56388c508f4121597bfbba70d41a6dfeee4d8cad5f295f  0.0s
+[0m => [internal] load metadata for docker.io/library/golang:1.27.1-bookworm@sha256:648f440f42a0958804efb24df176f806  0.3s
+ => [internal] load metadata for gcr.io/distroless/static-debian13:nonroot@sha256:1c2c046bc09ed40fad370b599a0b1ae  0.3s
+[?25h[1A[1A[1A[1A[1A[1A[1A[1A[0G[?25l[+] Building 2.1s (3/5)                                                                     docker:colima-gpu-telemetry
+[34m => [internal] load build definition from Dockerfile                                                               0.0s
+[0m[34m => => transferring dockerfile: 1.94kB                                                                             0.0s
+[0m[34m => resolve image config for docker-image://docker.io/docker/dockerfile:1                                          1.6s
+[0m[34m => CACHED docker-image://docker.io/docker/dockerfile:1@sha256:ecfaec9ed6d810b56388c508f4121597bfbba70d41a6dfeee4  0.0s
+[0m[34m => => resolve docker.io/docker/dockerfile:1@sha256:ecfaec9ed6d810b56388c508f4121597bfbba70d41a6dfeee4d8cad5f295f  0.0s
+[0m => [internal] load metadata for docker.io/library/golang:1.27.1-bookworm@sha256:648f440f42a0958804efb24df176f806  0.5s
+ => [internal] load metadata for gcr.io/distroless/static-debian13:nonroot@sha256:1c2c046bc09ed40fad370b599a0b1ae  0.5s
+[?25h[1A[1A[1A[1A[1A[1A[1A[1A[0G[?25l[+] Building 2.3s (3/5)                                                                     docker:colima-gpu-telemetry
+[34m => [internal] load build definition from Dockerfile                                                               0.0s
+[0m[34m => => transferring dockerfile: 1.94kB                                                                             0.0s
+[0m[34m => resolve image config for docker-image://docker.io/docker/dockerfile:1                                          1.6s
+[0m[34m => CACHED docker-image://docker.io/docker/dockerfile:1@sha256:ecfaec9ed6d810b56388c508f4121597bfbba70d41a6dfeee4  0.0s
+[0m[34m => => resolve docker.io/docker/dockerfile:1@sha256:ecfaec9ed6d810b56388c508f4121597bfbba70d41a6dfeee4d8cad5f295f  0.0s
+[0m => [internal] load metadata for docker.io/library/golang:1.27.1-bookworm@sha256:648f440f42a0958804efb24df176f806  0.6s
+ => [internal] load metadata for gcr.io/distroless/static-debian13:nonroot@sha256:1c2c046bc09ed40fad370b599a0b1ae  0.6s
+[?25h[1A[1A[1A[1A[1A[1A[1A[1A[0G[?25l[+] Building 2.4s (3/5)                                                                     docker:colima-gpu-telemetry
+[34m => [internal] load build definition from Dockerfile                                                               0.0s
+[0m[34m => => transferring dockerfile: 1.94kB                                                                             0.0s
+[0m[34m => resolve image config for docker-image://docker.io/docker/dockerfile:1                                          1.6s
+[0m[34m => CACHED docker-image://docker.io/docker/dockerfile:1@sha256:ecfaec9ed6d810b56388c508f4121597bfbba70d41a6dfeee4  0.0s
+[0m[34m => => resolve docker.io/docker/dockerfile:1@sha256:ecfaec9ed6d810b56388c508f4121597bfbba70d41a6dfeee4d8cad5f295f  0.0s
+[0m => [internal] load metadata for docker.io/library/golang:1.27.1-bookworm@sha256:648f440f42a0958804efb24df176f806  0.8s
+ => [internal] load metadata for gcr.io/distroless/static-debian13:nonroot@sha256:1c2c046bc09ed40fad370b599a0b1ae  0.8s
+[?25h[1A[1A[1A[1A[1A[1A[1A[1A[0G[?25l[+] Building 2.6s (3/5)                                                                     docker:colima-gpu-telemetry
+[34m => [internal] load build definition from Dockerfile                                                               0.0s
+[0m[34m => => transferring dockerfile: 1.94kB                                                                             0.0s
+[0m[34m => resolve image config for docker-image://docker.io/docker/dockerfile:1                                          1.6s
+[0m[34m => CACHED docker-image://docker.io/docker/dockerfile:1@sha256:ecfaec9ed6d810b56388c508f4121597bfbba70d41a6dfeee4  0.0s
+[0m[34m => => resolve docker.io/docker/dockerfile:1@sha256:ecfaec9ed6d810b56388c508f4121597bfbba70d41a6dfeee4d8cad5f295f  0.0s
+[0m => [internal] load metadata for docker.io/library/golang:1.27.1-bookworm@sha256:648f440f42a0958804efb24df176f806  0.9s
+ => [internal] load metadata for gcr.io/distroless/static-debian13:nonroot@sha256:1c2c046bc09ed40fad370b599a0b1ae  0.9s
+[?25h[1A[1A[1A[1A[1A[1A[1A[1A[0G[?25l[+] Building 2.7s (3/5)                                                                     docker:colima-gpu-telemetry
+[34m => [internal] load build definition from Dockerfile                                                               0.0s
+[0m[34m => => transferring dockerfile: 1.94kB                                                                             0.0s
+[0m[34m => resolve image config for docker-image://docker.io/docker/dockerfile:1                                          1.6s
+[0m[34m => CACHED docker-image://docker.io/docker/dockerfile:1@sha256:ecfaec9ed6d810b56388c508f4121597bfbba70d41a6dfeee4  0.0s
+[0m[34m => => resolve docker.io/docker/dockerfile:1@sha256:ecfaec9ed6d810b56388c508f4121597bfbba70d41a6dfeee4d8cad5f295f  0.0s
+[0m => [internal] load metadata for docker.io/library/golang:1.27.1-bookworm@sha256:648f440f42a0958804efb24df176f806  1.1s
+ => [internal] load metadata for gcr.io/distroless/static-debian13:nonroot@sha256:1c2c046bc09ed40fad370b599a0b1ae  1.1s
+[?25h[1A[1A[1A[1A[1A[1A[1A[1A[0G[?25l[+] Building 2.9s (3/5)                                                                     docker:colima-gpu-telemetry
+[34m => [internal] load build definition from Dockerfile                                                               0.0s
+[0m[34m => => transferring dockerfile: 1.94kB                                                                             0.0s
+[0m[34m => resolve image config for docker-image://docker.io/docker/dockerfile:1                                          1.6s
+[0m[34m => CACHED docker-image://docker.io/docker/dockerfile:1@sha256:ecfaec9ed6d810b56388c508f4121597bfbba70d41a6dfeee4  0.0s
+[0m[34m => => resolve docker.io/docker/dockerfile:1@sha256:ecfaec9ed6d810b56388c508f4121597bfbba70d41a6dfeee4d8cad5f295f  0.0s
+[0m => [internal] load metadata for docker.io/library/golang:1.27.1-bookworm@sha256:648f440f42a0958804efb24df176f806  1.2s
+ => [internal] load metadata for gcr.io/distroless/static-debian13:nonroot@sha256:1c2c046bc09ed40fad370b599a0b1ae  1.2s
+[?25h[1A[1A[1A[1A[1A[1A[1A[1A[0G[?25l[+] Building 3.0s (3/5)                                                                     docker:colima-gpu-telemetry
+[34m => [internal] load build definition from Dockerfile                                                               0.0s
+[0m[34m => => transferring dockerfile: 1.94kB                                                                             0.0s
+[0m[34m => resolve image config for docker-image://docker.io/docker/dockerfile:1                                          1.6s
+[0m[34m => CACHED docker-image://docker.io/docker/dockerfile:1@sha256:ecfaec9ed6d810b56388c508f4121597bfbba70d41a6dfeee4  0.0s
+[0m[34m => => resolve docker.io/docker/dockerfile:1@sha256:ecfaec9ed6d810b56388c508f4121597bfbba70d41a6dfeee4d8cad5f295f  0.0s
+[0m => [internal] load metadata for docker.io/library/golang:1.27.1-bookworm@sha256:648f440f42a0958804efb24df176f806  1.4s
+ => [internal] load metadata for gcr.io/distroless/static-debian13:nonroot@sha256:1c2c046bc09ed40fad370b599a0b1ae  1.4s
+[?25h[1A[1A[1A[1A[1A[1A[1A[1A[0G[?25l[+] Building 3.1s (4/5)                                                                     docker:colima-gpu-telemetry
+[34m => [internal] load build definition from Dockerfile                                                               0.0s
+[0m[34m => => transferring dockerfile: 1.94kB                                                                             0.0s
+[0m[34m => resolve image config for docker-image://docker.io/docker/dockerfile:1                                          1.6s
+[0m[34m => CACHED docker-image://docker.io/docker/dockerfile:1@sha256:ecfaec9ed6d810b56388c508f4121597bfbba70d41a6dfeee4  0.0s
+[0m[34m => => resolve docker.io/docker/dockerfile:1@sha256:ecfaec9ed6d810b56388c508f4121597bfbba70d41a6dfeee4d8cad5f295f  0.0s
+[0m[34m => [internal] load metadata for docker.io/library/golang:1.27.1-bookworm@sha256:648f440f42a0958804efb24df176f806  1.4s
+[0m => [internal] load metadata for gcr.io/distroless/static-debian13:nonroot@sha256:1c2c046bc09ed40fad370b599a0b1ae  1.4s
+[?25h[1A[1A[1A[1A[1A[1A[1A[1A[0G[?25l[+] Building 3.2s (4/5)                                                                     docker:colima-gpu-telemetry
+[34m => [internal] load build definition from Dockerfile                                                               0.0s
+[0m[34m => => transferring dockerfile: 1.94kB                                                                             0.0s
+[0m[34m => resolve image config for docker-image://docker.io/docker/dockerfile:1                                          1.6s
+[0m[34m => CACHED docker-image://docker.io/docker/dockerfile:1@sha256:ecfaec9ed6d810b56388c508f4121597bfbba70d41a6dfeee4  0.0s
+[0m[34m => => resolve docker.io/docker/dockerfile:1@sha256:ecfaec9ed6d810b56388c508f4121597bfbba70d41a6dfeee4d8cad5f295f  0.0s
+[0m[34m => [internal] load metadata for docker.io/library/golang:1.27.1-bookworm@sha256:648f440f42a0958804efb24df176f806  1.4s
+[0m => [internal] load metadata for gcr.io/distroless/static-debian13:nonroot@sha256:1c2c046bc09ed40fad370b599a0b1ae  1.6s
+[?25h[1A[1A[1A[1A[1A[1A[1A[1A[0G[?25l[+] Building 3.3s (5/5)                                                                     docker:colima-gpu-telemetry
+[34m => [internal] load build definition from Dockerfile                                                               0.0s
+[0m[34m => => transferring dockerfile: 1.94kB                                                                             0.0s
+[0m[34m => resolve image config for docker-image://docker.io/docker/dockerfile:1                                          1.6s
+[0m[34m => CACHED docker-image://docker.io/docker/dockerfile:1@sha256:ecfaec9ed6d810b56388c508f4121597bfbba70d41a6dfeee4  0.0s
+[0m[34m => => resolve docker.io/docker/dockerfile:1@sha256:ecfaec9ed6d810b56388c508f4121597bfbba70d41a6dfeee4d8cad5f295f  0.0s
+[0m[34m => [internal] load metadata for docker.io/library/golang:1.27.1-bookworm@sha256:648f440f42a0958804efb24df176f806  1.4s
+[0m[34m => [internal] load metadata for gcr.io/distroless/static-debian13:nonroot@sha256:1c2c046bc09ed40fad370b599a0b1ae  1.6s
+[0m[?25h[1A[1A[1A[1A[1A[1A[1A[1A[0G[?25l[+] Building 3.4s (19/19) FINISHED                                                          docker:colima-gpu-telemetry
+[34m => [internal] load build definition from Dockerfile                                                               0.0s
+[0m[34m => => transferring dockerfile: 1.94kB                                                                             0.0s
+[0m[34m => resolve image config for docker-image://docker.io/docker/dockerfile:1                                          1.6s
+[0m[34m => CACHED docker-image://docker.io/docker/dockerfile:1@sha256:ecfaec9ed6d810b56388c508f4121597bfbba70d41a6dfeee4  0.0s
+[0m[34m => => resolve docker.io/docker/dockerfile:1@sha256:ecfaec9ed6d810b56388c508f4121597bfbba70d41a6dfeee4d8cad5f295f  0.0s
+[0m[34m => [internal] load metadata for docker.io/library/golang:1.27.1-bookworm@sha256:648f440f42a0958804efb24df176f806  1.4s
+[0m[34m => [internal] load metadata for gcr.io/distroless/static-debian13:nonroot@sha256:1c2c046bc09ed40fad370b599a0b1ae  1.6s
+[0m[34m => [internal] load .dockerignore                                                                                  0.0s
+[0m[34m => => transferring context: 333B                                                                                  0.0s
+[0m[34m => [build 1/8] FROM docker.io/library/golang:1.27.1-bookworm@sha256:648f440f42a0958804efb24df176f806f9d353b41f1c  0.0s
+[0m[34m => => resolve docker.io/library/golang:1.27.1-bookworm@sha256:648f440f42a0958804efb24df176f806f9d353b41f1c0627f6  0.0s
+[0m[34m => [runtime 1/2] FROM gcr.io/distroless/static-debian13:nonroot@sha256:1c2c046bc09ed40fad370b599a0b1ae7987f55b01  0.0s
+[0m[34m => => resolve gcr.io/distroless/static-debian13:nonroot@sha256:1c2c046bc09ed40fad370b599a0b1ae7987f55b01e247cf27  0.0s
+[0m[34m => [internal] load build context                                                                                  0.0s
+[0m[34m => => transferring context: 3.01kB                                                                                0.0s
+[0m[34m => CACHED [build 2/8] WORKDIR /src                                                                                0.0s
+[0m[34m => CACHED [build 3/8] COPY go.mod go.sum ./                                                                       0.0s
+[0m[34m => CACHED [build 4/8] RUN --mount=type=cache,target=/go/pkg/mod go mod download                                   0.0s
+[0m[34m => CACHED [build 5/8] COPY cmd/ cmd/                                                                              0.0s
+[0m[34m => CACHED [build 6/8] COPY internal/ internal/                                                                    0.0s
+[0m[34m => CACHED [build 7/8] COPY migrations/ migrations/                                                                0.0s
+[0m[34m => CACHED [build 8/8] RUN --mount=type=cache,target=/go/pkg/mod --mount=type=cache,target=/root/.cache/go-build   0.0s
+[0m[34m => CACHED [queue 1/2] COPY --from=build --chown=65532:65532 /out/queue /app/queue                                 0.0s
+[0m[34m => CACHED [queue 2/2] COPY --from=build --chown=65532:65532 /out/queue-data /var/lib/gpu-telemetry                0.0s
+[0m[34m => exporting to image                                                                                             0.0s
+[0m[34m => => exporting layers                                                                                            0.0s
+[0m[34m => => exporting manifest sha256:78260b4d78fe15e7058ce008ee37535adb772511ce316d2381b7a62602124c2e                  0.0s
+[0m[34m => => exporting config sha256:42ada69bf5a567c81969938b3a52d9793ac873d9adc1e9ae706cd5acc0771faa                    0.0s
+[0m[34m => => exporting attestation manifest sha256:1887f9b2575eed70b2d0fb0ba769dc22b1bd729fa8a8eb6f0acd81ada7a332fe      0.0s
+[0m[34m => => exporting manifest list sha256:26da5be582b3397fc4569019c92830514203bb8c2f100c4c19fbfad5fefaafc1             0.0s
+[0m[34m => => naming to docker.io/gpu-telemetry/queue:dev                                                                 0.0s
+[0m[34m => => unpacking to docker.io/gpu-telemetry/queue:dev                                                              0.0s
+[0m[?25h[1A[1B[0G[?25l[+] Building 0.0s (0/1)                                                                     docker:colima-gpu-telemetry
+[?25h[1A[0G[?25l[+] Building 0.2s (1/2)                                                                     docker:colima-gpu-telemetry
+[34m => [internal] load build definition from Dockerfile                                                               0.0s
+[0m[34m => => transferring dockerfile: 1.94kB                                                                             0.0s
+[0m => resolve image config for docker-image://docker.io/docker/dockerfile:1                                          0.2s
+[?25h[1A[1A[1A[1A[0G[?25l[+] Building 0.3s (1/2)                                                                     docker:colima-gpu-telemetry
+[34m => [internal] load build definition from Dockerfile                                                               0.0s
+[0m[34m => => transferring dockerfile: 1.94kB                                                                             0.0s
+[0m => resolve image config for docker-image://docker.io/docker/dockerfile:1                                          0.3s
+[?25h[1A[1A[1A[1A[0G[?25l[+] Building 0.3s (2/3)                                                                     docker:colima-gpu-telemetry
+[34m => [internal] load build definition from Dockerfile                                                               0.0s
+[0m[34m => => transferring dockerfile: 1.94kB                                                                             0.0s
+[0m[34m => resolve image config for docker-image://docker.io/docker/dockerfile:1                                          0.3s
+[0m[?25h[1A[1A[1A[1A[0G[?25l[+] Building 0.4s (19/19) FINISHED                                                          docker:colima-gpu-telemetry
+[34m => [internal] load build definition from Dockerfile                                                               0.0s
+[0m[34m => => transferring dockerfile: 1.94kB                                                                             0.0s
+[0m[34m => resolve image config for docker-image://docker.io/docker/dockerfile:1                                          0.3s
+[0m[34m => CACHED docker-image://docker.io/docker/dockerfile:1@sha256:ecfaec9ed6d810b56388c508f4121597bfbba70d41a6dfeee4  0.0s
+[0m[34m => => resolve docker.io/docker/dockerfile:1@sha256:ecfaec9ed6d810b56388c508f4121597bfbba70d41a6dfeee4d8cad5f295f  0.0s
+[0m[34m => [internal] load metadata for gcr.io/distroless/static-debian13:nonroot@sha256:1c2c046bc09ed40fad370b599a0b1ae  0.0s
+[0m[34m => [internal] load metadata for docker.io/library/golang:1.27.1-bookworm@sha256:648f440f42a0958804efb24df176f806  0.0s
+[0m[34m => [internal] load .dockerignore                                                                                  0.0s
+[0m[34m => => transferring context: 333B                                                                                  0.0s
+[0m[34m => [build 1/8] FROM docker.io/library/golang:1.27.1-bookworm@sha256:648f440f42a0958804efb24df176f806f9d353b41f1c  0.0s
+[0m[34m => => resolve docker.io/library/golang:1.27.1-bookworm@sha256:648f440f42a0958804efb24df176f806f9d353b41f1c0627f6  0.0s
+[0m[34m => [runtime 1/2] FROM gcr.io/distroless/static-debian13:nonroot@sha256:1c2c046bc09ed40fad370b599a0b1ae7987f55b01  0.0s
+[0m[34m => => resolve gcr.io/distroless/static-debian13:nonroot@sha256:1c2c046bc09ed40fad370b599a0b1ae7987f55b01e247cf27  0.0s
+[0m[34m => [internal] load build context                                                                                  0.0s
+[0m[34m => => transferring context: 1.11MB                                                                                0.0s
+[0m[34m => CACHED [build 2/8] WORKDIR /src                                                                                0.0s
+[0m[34m => CACHED [build 3/8] COPY go.mod go.sum ./                                                                       0.0s
+[0m[34m => CACHED [build 4/8] RUN --mount=type=cache,target=/go/pkg/mod go mod download                                   0.0s
+[0m[34m => CACHED [build 5/8] COPY cmd/ cmd/                                                                              0.0s
+[0m[34m => CACHED [build 6/8] COPY internal/ internal/                                                                    0.0s
+[0m[34m => CACHED [build 7/8] COPY migrations/ migrations/                                                                0.0s
+[0m[34m => CACHED [build 8/8] RUN --mount=type=cache,target=/go/pkg/mod --mount=type=cache,target=/root/.cache/go-build   0.0s
+[0m[34m => CACHED [streamer 1/2] COPY --from=build --chown=65532:65532 /out/streamer /app/streamer                        0.0s
+[0m[34m => CACHED [streamer 2/2] COPY --chown=65532:65532 Problemstatement/dcgm_metrics_20250718_134233.csv /app/data/me  0.0s
+[0m[34m => exporting to image                                                                                             0.0s
+[0m[34m => => exporting layers                                                                                            0.0s
+[0m[34m => => exporting manifest sha256:b74a17c824e3bcb4f13b4bfdbf89ba9d781453c257a3bcd3579b346b7f851260                  0.0s
+[0m[34m => => exporting config sha256:f34cb39033771049c42072786b3b281ff907a3e94711fe8d84b8e6fa7389c9c3                    0.0s
+[0m[34m => => exporting attestation manifest sha256:c7d76d64a4cf2e9f90eef212367545b9fd90610fafe2ea98569df868c65876a1      0.0s
+[0m[34m => => exporting manifest list sha256:366b49c6d4c9af36cf1418ab68cc21a7c450de3b2c87377767dbd738c542262d             0.0s
+[0m[34m => => naming to docker.io/gpu-telemetry/streamer:dev                                                              0.0s
+[0m[34m => => unpacking to docker.io/gpu-telemetry/streamer:dev                                                           0.0s
+[0m[?25h[1A[1B[0G[?25l[+] Building 0.0s (0/1)                                                                     docker:colima-gpu-telemetry
+[?25h[1A[0G[?25l[+] Building 0.2s (1/2)                                                                     docker:colima-gpu-telemetry
+[34m => [internal] load build definition from Dockerfile                                                               0.0s
+[0m[34m => => transferring dockerfile: 1.94kB                                                                             0.0s
+[0m => resolve image config for docker-image://docker.io/docker/dockerfile:1                                          0.2s
+[?25h[1A[1A[1A[1A[0G[?25l[+] Building 0.3s (1/2)                                                                     docker:colima-gpu-telemetry
+[34m => [internal] load build definition from Dockerfile                                                               0.0s
+[0m[34m => => transferring dockerfile: 1.94kB                                                                             0.0s
+[0m => resolve image config for docker-image://docker.io/docker/dockerfile:1                                          0.3s
+[?25h[1A[1A[1A[1A[0G[?25l[+] Building 0.3s (2/2)                                                                     docker:colima-gpu-telemetry
+[34m => [internal] load build definition from Dockerfile                                                               0.0s
+[0m[34m => => transferring dockerfile: 1.94kB                                                                             0.0s
+[0m[34m => resolve image config for docker-image://docker.io/docker/dockerfile:1                                          0.3s
+[0m[?25h[1A[1A[1A[1A[0G[?25l[+] Building 0.4s (18/18) FINISHED                                                          docker:colima-gpu-telemetry
+[34m => [internal] load build definition from Dockerfile                                                               0.0s
+[0m[34m => => transferring dockerfile: 1.94kB                                                                             0.0s
+[0m[34m => resolve image config for docker-image://docker.io/docker/dockerfile:1                                          0.3s
+[0m[34m => CACHED docker-image://docker.io/docker/dockerfile:1@sha256:ecfaec9ed6d810b56388c508f4121597bfbba70d41a6dfeee4  0.0s
+[0m[34m => => resolve docker.io/docker/dockerfile:1@sha256:ecfaec9ed6d810b56388c508f4121597bfbba70d41a6dfeee4d8cad5f295f  0.0s
+[0m[34m => [internal] load metadata for gcr.io/distroless/static-debian13:nonroot@sha256:1c2c046bc09ed40fad370b599a0b1ae  0.0s
+[0m[34m => [internal] load metadata for docker.io/library/golang:1.27.1-bookworm@sha256:648f440f42a0958804efb24df176f806  0.0s
+[0m[34m => [internal] load .dockerignore                                                                                  0.0s
+[0m[34m => => transferring context: 333B                                                                                  0.0s
+[0m[34m => [build 1/8] FROM docker.io/library/golang:1.27.1-bookworm@sha256:648f440f42a0958804efb24df176f806f9d353b41f1c  0.0s
+[0m[34m => => resolve docker.io/library/golang:1.27.1-bookworm@sha256:648f440f42a0958804efb24df176f806f9d353b41f1c0627f6  0.0s
+[0m[34m => [internal] load build context                                                                                  0.0s
+[0m[34m => => transferring context: 3.01kB                                                                                0.0s
+[0m[34m => [runtime 1/2] FROM gcr.io/distroless/static-debian13:nonroot@sha256:1c2c046bc09ed40fad370b599a0b1ae7987f55b01  0.0s
+[0m[34m => => resolve gcr.io/distroless/static-debian13:nonroot@sha256:1c2c046bc09ed40fad370b599a0b1ae7987f55b01e247cf27  0.0s
+[0m[34m => CACHED [build 2/8] WORKDIR /src                                                                                0.0s
+[0m[34m => CACHED [build 3/8] COPY go.mod go.sum ./                                                                       0.0s
+[0m[34m => CACHED [build 4/8] RUN --mount=type=cache,target=/go/pkg/mod go mod download                                   0.0s
+[0m[34m => CACHED [build 5/8] COPY cmd/ cmd/                                                                              0.0s
+[0m[34m => CACHED [build 6/8] COPY internal/ internal/                                                                    0.0s
+[0m[34m => CACHED [build 7/8] COPY migrations/ migrations/                                                                0.0s
+[0m[34m => CACHED [build 8/8] RUN --mount=type=cache,target=/go/pkg/mod --mount=type=cache,target=/root/.cache/go-build   0.0s
+[0m[34m => CACHED [collector 1/1] COPY --from=build --chown=65532:65532 /out/collector /app/collector                     0.0s
+[0m[34m => exporting to image                                                                                             0.0s
+[0m[34m => => exporting layers                                                                                            0.0s
+[0m[34m => => exporting manifest sha256:b8937b3c4d36545f808f1209bf20006362a6e98707f0ae91d37986ffe9045952                  0.0s
+[0m[34m => => exporting config sha256:8477dc59a723f0640077c83aac8a4f0f5294439be7966e49b3a6fc267c88f5c2                    0.0s
+[0m[34m => => exporting attestation manifest sha256:71415001de70f9e57c9a7a0acdcedaf7217569979d63ad9a84259e689be2ad31      0.0s
+[0m[34m => => exporting manifest list sha256:658d198996b69629897d46d7a35e9f7ce27cc598c2ee76282f6bb77e32ccf1ef             0.0s
+[0m[34m => => naming to docker.io/gpu-telemetry/collector:dev                                                             0.0s
+[0m[34m => => unpacking to docker.io/gpu-telemetry/collector:dev                                                          0.0s
+[0m[?25h[1A[1B[0G[?25l[+] Building 0.0s (0/1)                                                                     docker:colima-gpu-telemetry
+[?25h[1A[0G[?25l[+] Building 0.2s (1/2)                                                                     docker:colima-gpu-telemetry
+[34m => [internal] load build definition from Dockerfile                                                               0.0s
+[0m[34m => => transferring dockerfile: 1.94kB                                                                             0.0s
+[0m => resolve image config for docker-image://docker.io/docker/dockerfile:1                                          0.2s
+[?25h[1A[1A[1A[1A[0G[?25l[+] Building 0.3s (1/2)                                                                     docker:colima-gpu-telemetry
+[34m => [internal] load build definition from Dockerfile                                                               0.0s
+[0m[34m => => transferring dockerfile: 1.94kB                                                                             0.0s
+[0m => resolve image config for docker-image://docker.io/docker/dockerfile:1                                          0.3s
+[?25h[1A[1A[1A[1A[0G[?25l[+] Building 0.4s (2/2)                                                                     docker:colima-gpu-telemetry
+[34m => [internal] load build definition from Dockerfile                                                               0.0s
+[0m[34m => => transferring dockerfile: 1.94kB                                                                             0.0s
+[0m[34m => resolve image config for docker-image://docker.io/docker/dockerfile:1                                          0.4s
+[0m[?25h[1A[1A[1A[1A[0G[?25l[+] Building 0.5s (18/18) FINISHED                                                          docker:colima-gpu-telemetry
+[34m => [internal] load build definition from Dockerfile                                                               0.0s
+[0m[34m => => transferring dockerfile: 1.94kB                                                                             0.0s
+[0m[34m => resolve image config for docker-image://docker.io/docker/dockerfile:1                                          0.4s
+[0m[34m => CACHED docker-image://docker.io/docker/dockerfile:1@sha256:ecfaec9ed6d810b56388c508f4121597bfbba70d41a6dfeee4  0.0s
+[0m[34m => => resolve docker.io/docker/dockerfile:1@sha256:ecfaec9ed6d810b56388c508f4121597bfbba70d41a6dfeee4d8cad5f295f  0.0s
+[0m[34m => [internal] load metadata for gcr.io/distroless/static-debian13:nonroot@sha256:1c2c046bc09ed40fad370b599a0b1ae  0.0s
+[0m[34m => [internal] load metadata for docker.io/library/golang:1.27.1-bookworm@sha256:648f440f42a0958804efb24df176f806  0.0s
+[0m[34m => [internal] load .dockerignore                                                                                  0.0s
+[0m[34m => => transferring context: 333B                                                                                  0.0s
+[0m[34m => [build 1/8] FROM docker.io/library/golang:1.27.1-bookworm@sha256:648f440f42a0958804efb24df176f806f9d353b41f1c  0.0s
+[0m[34m => => resolve docker.io/library/golang:1.27.1-bookworm@sha256:648f440f42a0958804efb24df176f806f9d353b41f1c0627f6  0.0s
+[0m[34m => [runtime 1/2] FROM gcr.io/distroless/static-debian13:nonroot@sha256:1c2c046bc09ed40fad370b599a0b1ae7987f55b01  0.0s
+[0m[34m => => resolve gcr.io/distroless/static-debian13:nonroot@sha256:1c2c046bc09ed40fad370b599a0b1ae7987f55b01e247cf27  0.0s
+[0m[34m => [internal] load build context                                                                                  0.0s
+[0m[34m => => transferring context: 3.01kB                                                                                0.0s
+[0m[34m => CACHED [build 2/8] WORKDIR /src                                                                                0.0s
+[0m[34m => CACHED [build 3/8] COPY go.mod go.sum ./                                                                       0.0s
+[0m[34m => CACHED [build 4/8] RUN --mount=type=cache,target=/go/pkg/mod go mod download                                   0.0s
+[0m[34m => CACHED [build 5/8] COPY cmd/ cmd/                                                                              0.0s
+[0m[34m => CACHED [build 6/8] COPY internal/ internal/                                                                    0.0s
+[0m[34m => CACHED [build 7/8] COPY migrations/ migrations/                                                                0.0s
+[0m[34m => CACHED [build 8/8] RUN --mount=type=cache,target=/go/pkg/mod --mount=type=cache,target=/root/.cache/go-build   0.0s
+[0m[34m => CACHED [api 1/1] COPY --from=build --chown=65532:65532 /out/api /app/api                                       0.0s
+[0m[34m => exporting to image                                                                                             0.0s
+[0m[34m => => exporting layers                                                                                            0.0s
+[0m[34m => => exporting manifest sha256:ae76a220aed253636bbe711fd0022a8f5d1bd4a87c401dd304ae55688c80e8ff                  0.0s
+[0m[34m => => exporting config sha256:dba635baa727ce3bcbb1ec4129c68d1ba51c057032e690530b08ec8e0c01b857                    0.0s
+[0m[34m => => exporting attestation manifest sha256:707bb6e9a7482b22f3d63a4cf640bc48592e3f986416372332c6074605dd269e      0.0s
+[0m[34m => => exporting manifest list sha256:e9014f6546b98a9892edb23841b60f903f7d0e8fc59323f8d93cb704789a1083             0.0s
+[0m[34m => => naming to docker.io/gpu-telemetry/api:dev                                                                   0.0s
+[0m[34m => => unpacking to docker.io/gpu-telemetry/api:dev                                                                0.0s
+[0m[?25h[1A[1B[0G[?25l[+] Building 0.0s (0/1)                                                                     docker:colima-gpu-telemetry
+[?25h[1A[0G[?25l[+] Building 0.2s (1/2)                                                                     docker:colima-gpu-telemetry
+[34m => [internal] load build definition from Dockerfile                                                               0.0s
+[0m[34m => => transferring dockerfile: 1.94kB                                                                             0.0s
+[0m => resolve image config for docker-image://docker.io/docker/dockerfile:1                                          0.2s
+[?25h[1A[1A[1A[1A[0G[?25l[+] Building 0.3s (1/2)                                                                     docker:colima-gpu-telemetry
+[34m => [internal] load build definition from Dockerfile                                                               0.0s
+[0m[34m => => transferring dockerfile: 1.94kB                                                                             0.0s
+[0m => resolve image config for docker-image://docker.io/docker/dockerfile:1                                          0.3s
+[?25h[1A[1A[1A[1A[0G[?25l[+] Building 0.3s (2/2)                                                                     docker:colima-gpu-telemetry
+[34m => [internal] load build definition from Dockerfile                                                               0.0s
+[0m[34m => => transferring dockerfile: 1.94kB                                                                             0.0s
+[0m[34m => resolve image config for docker-image://docker.io/docker/dockerfile:1                                          0.3s
+[0m[?25h[1A[1A[1A[1A[0G[?25l[+] Building 0.4s (18/18) FINISHED                                                          docker:colima-gpu-telemetry
+[34m => [internal] load build definition from Dockerfile                                                               0.0s
+[0m[34m => => transferring dockerfile: 1.94kB                                                                             0.0s
+[0m[34m => resolve image config for docker-image://docker.io/docker/dockerfile:1                                          0.3s
+[0m[34m => CACHED docker-image://docker.io/docker/dockerfile:1@sha256:ecfaec9ed6d810b56388c508f4121597bfbba70d41a6dfeee4  0.0s
+[0m[34m => => resolve docker.io/docker/dockerfile:1@sha256:ecfaec9ed6d810b56388c508f4121597bfbba70d41a6dfeee4d8cad5f295f  0.0s
+[0m[34m => [internal] load metadata for gcr.io/distroless/static-debian13:nonroot@sha256:1c2c046bc09ed40fad370b599a0b1ae  0.0s
+[0m[34m => [internal] load metadata for docker.io/library/golang:1.27.1-bookworm@sha256:648f440f42a0958804efb24df176f806  0.0s
+[0m[34m => [internal] load .dockerignore                                                                                  0.0s
+[0m[34m => => transferring context: 333B                                                                                  0.0s
+[0m[34m => [build 1/8] FROM docker.io/library/golang:1.27.1-bookworm@sha256:648f440f42a0958804efb24df176f806f9d353b41f1c  0.0s
+[0m[34m => => resolve docker.io/library/golang:1.27.1-bookworm@sha256:648f440f42a0958804efb24df176f806f9d353b41f1c0627f6  0.0s
+[0m[34m => [internal] load build context                                                                                  0.0s
+[0m[34m => => transferring context: 3.01kB                                                                                0.0s
+[0m[34m => [runtime 1/2] FROM gcr.io/distroless/static-debian13:nonroot@sha256:1c2c046bc09ed40fad370b599a0b1ae7987f55b01  0.0s
+[0m[34m => => resolve gcr.io/distroless/static-debian13:nonroot@sha256:1c2c046bc09ed40fad370b599a0b1ae7987f55b01e247cf27  0.0s
+[0m[34m => CACHED [build 2/8] WORKDIR /src                                                                                0.0s
+[0m[34m => CACHED [build 3/8] COPY go.mod go.sum ./                                                                       0.0s
+[0m[34m => CACHED [build 4/8] RUN --mount=type=cache,target=/go/pkg/mod go mod download                                   0.0s
+[0m[34m => CACHED [build 5/8] COPY cmd/ cmd/                                                                              0.0s
+[0m[34m => CACHED [build 6/8] COPY internal/ internal/                                                                    0.0s
+[0m[34m => CACHED [build 7/8] COPY migrations/ migrations/                                                                0.0s
+[0m[34m => CACHED [build 8/8] RUN --mount=type=cache,target=/go/pkg/mod --mount=type=cache,target=/root/.cache/go-build   0.0s
+[0m[34m => CACHED [migrate 1/1] COPY --from=build --chown=65532:65532 /out/migrate /app/migrate                           0.0s
+[0m[34m => exporting to image                                                                                             0.0s
+[0m[34m => => exporting layers                                                                                            0.0s
+[0m[34m => => exporting manifest sha256:3bb958c87e504543bee40e0e418c3ed4e911fe8b6ddf08cac15f37b0b79306ec                  0.0s
+[0m[34m => => exporting config sha256:9dd0646d6c683fe6f34cc33c00ca815d3c2f28c89a93cc38d39162427fc195ef                    0.0s
+[0m[34m => => exporting attestation manifest sha256:408833221dec5d262ea79c2c6300c070aaa4cb6ea689cd5d8e66cd1bd09341d9      0.0s
+[0m[34m => => exporting manifest list sha256:1d025ecb282820a13d5c9634543a8b3b066d98efa3551cbfd28e24ab6dea1fed             0.0s
+[0m[34m => => naming to docker.io/gpu-telemetry/migrate:dev                                                               0.0s
+[0m[34m => => unpacking to docker.io/gpu-telemetry/migrate:dev                                                            0.0s
+[0m[?25h[gpu-telemetry/queue:dev] linux/arm64 user=65532:65532 id=sha256:26da5be582b3397fc4569019c92830514203bb8c2f100c4c19fbfad5fefaafc1
+[gpu-telemetry/streamer:dev] linux/arm64 user=65532:65532 id=sha256:366b49c6d4c9af36cf1418ab68cc21a7c450de3b2c87377767dbd738c542262d
+[gpu-telemetry/collector:dev] linux/arm64 user=65532:65532 id=sha256:658d198996b69629897d46d7a35e9f7ce27cc598c2ee76282f6bb77e32ccf1ef
+[gpu-telemetry/api:dev] linux/arm64 user=65532:65532 id=sha256:e9014f6546b98a9892edb23841b60f903f7d0e8fc59323f8d93cb704789a1083
+[gpu-telemetry/migrate:dev] linux/arm64 user=65532:65532 id=sha256:1d025ecb282820a13d5c9634543a8b3b066d98efa3551cbfd28e24ab6dea1fed
+[1m[7m%[27m[1m[0m                                                                                                                        ]7;file://Dhirajs-MacBook-Air.local/Users/dhirajsriharsha/Preparation/ProjectMsgQueue[0m[27m[24m[Jdhirajsriharsha@Dhirajs-MacBook-Air ProjectMsgQueue % [K[?2004h[7mmake minikube-load[27m[18D[27mm[27ma[27mk[27me[27m [27mm[27mi[27mn[27mi[27mk[27mu[27mb[27me[27m-[27ml[27mo[27ma[27md[?2004l
+bash scripts/day5-images.sh load
+[1m[7m%[27m[1m[0m                                                                                                                        ]7;file://Dhirajs-MacBook-Air.local/Users/dhirajsriharsha/Preparation/ProjectMsgQueue[0m[27m[24m[Jdhirajsriharsha@Dhirajs-MacBook-Air ProjectMsgQueue % [K[?2004h[?2004l
+[1m[7m%[27m[1m[0m                                                                                                                        ]7;file://Dhirajs-MacBook-Air.local/Users/dhirajsriharsha/Preparation/ProjectMsgQueue[0m[27m[24m[Jdhirajsriharsha@Dhirajs-MacBook-Air ProjectMsgQueue % [K[?2004h[?2004l
+[1m[7m%[27m[1m[0m                                                                                                                        ]7;file://Dhirajs-MacBook-Air.local/Users/dhirajsriharsha/Preparation/ProjectMsgQueue[0m[27m[24m[Jdhirajsriharsha@Dhirajs-MacBook-Air ProjectMsgQueue % [K[?2004h[7mmake helm-install[27m[17D[27mm[27ma[27mk[27me[27m [27mh[27me[27ml[27mm[27m-[27mi[27mn[27ms[27mt[27ma[27ml[27ml[?2004l
+bash scripts/day5-install.sh
+NAME: gpu-telemetry
+LAST DEPLOYED: Sun Sep 13 22:17:22 2026
+NAMESPACE: [36mgpu-telemetry-day5[0m
+STATUS: [32mdeployed[0m
+REVISION: 1
+DESCRIPTION: Install complete
+TEST SUITE: None
+NOTES:
+Database bootstrap phase only. Wait for PostgreSQL, then complete installation:
+  helm upgrade gpu-telemetry deploy/helm/gpu-telemetry -n gpu-telemetry-day5 --reuse-values --set bootstrapOnly=false --wait --timeout 5m
+Prefer make helm-install: it runs both phases with an explicit Kubernetes context.
+
+Queue replicas are fixed at one. PVCs and generated database credentials are retained on uninstall.
+Do not delete the namespace if you intend to retain those resources.
+partitioned roll out complete: 1 new pods have been updated...
+Release "gpu-telemetry" has been upgraded. Happy Helming!
+NAME: gpu-telemetry
+LAST DEPLOYED: Sun Sep 13 22:17:26 2026
+NAMESPACE: [36mgpu-telemetry-day5[0m
+STATUS: [32mdeployed[0m
+REVISION: 2
+DESCRIPTION: Upgrade complete
+TEST SUITE: None
+NOTES:
+Pipeline installed. API access:
+  kubectl -n gpu-telemetry-day5 port-forward service/gpu-telemetry-api 8080:8080
+  curl -fsS http://127.0.0.1:8080/api/v1/gpus
+Migration evidence: kubectl -n gpu-telemetry-day5 logs job/gpu-telemetry-migrate
+
+Queue replicas are fixed at one. PVCs and generated database credentials are retained on uninstall.
+Do not delete the namespace if you intend to retain those resources.
+job.batch/gpu-telemetry-migrate condition met
+[1m[7m%[27m[1m[0m                                                                                                                        ]7;file://Dhirajs-MacBook-Air.local/Users/dhirajsriharsha/Preparation/ProjectMsgQueue[0m[27m[24m[Jdhirajsriharsha@Dhirajs-MacBook-Air ProjectMsgQueue % [K[?2004hkkubectl get pods -n gpu-te      [7mgpu-telemetry-day5[27m[18D[27mg[27mp[27mu[27m-[27mt[27me[27ml[27me[27mm[27me[27mt[27mr[27my[27m-[27md[27ma[27my[27m5[?2004l
+NAME                                       READY   STATUS      RESTARTS   AGE
+gpu-telemetry-api-6fbd895b64-5mjx6         1/1     Running     0          35s
+gpu-telemetry-collector-85b6879c97-4hr7l   1/1     Running     0          35s
+gpu-telemetry-migrate-czrsp                0/1     Completed   0          38s
+gpu-telemetry-postgresql-0                 1/1     Running     0          41s
+gpu-telemetry-queue-0                      1/1     Running     0          35s
+gpu-telemetry-streamer-cbff6c649-hkzx9     1/1     Running     0          35s
+[1m[7m%[27m[1m[0m                                                                                                                        ]7;file://Dhirajs-MacBook-Air.local/Users/dhirajsriharsha/Preparation/ProjectMsgQueue[0m[27m[24m[Jdhirajsriharsha@Dhirajs-MacBook-Air ProjectMsgQueue % [K[?2004h[7mexport RELEASE=gpu-telemetry[27m[28D[27me[27mx[27mp[27mo[27mr[27mt[27m [27mR[27mE[27mL[27mE[27mA[27mS[27mE[27m=[27mg[27mp[27mu[27m-[27mt[27me[27ml[27me[27mm[27me[27mt[27mr[27my[?2004l
+[1m[7m%[27m[1m[0m                                                                                                                        ]7;file://Dhirajs-MacBook-Air.local/Users/dhirajsriharsha/Preparation/ProjectMsgQueue[0m[27m[24m[Jdhirajsriharsha@Dhirajs-MacBook-Air ProjectMsgQueue % [K[?2004h[7mexport NAMESPACE=gpu-telemetry-day5[27m[35D[27me[27mx[27mp[27mo[27mr[27mt[27m [27mN[27mA[27mM[27mE[27mS[27mP[27mA[27mC[27mE[27m=[27mg[27mp[27mu[27m-[27mt[27me[27ml[27me[27mm[27me[27mt[27mr[27my[27m-[27md[27ma[27my[27m5[?2004l
+[1m[7m%[27m[1m[0m                                                                                                                        ]7;file://Dhirajs-MacBook-Air.local/Users/dhirajsriharsha/Preparation/ProjectMsgQueue[0m[27m[24m[Jdhirajsriharsha@Dhirajs-MacBook-Air ProjectMsgQueue % [K[?2004h[7mexport KUBE_CONTEXT=gpu-telemetry[27m[33D[27me[27mx[27mp[27mo[27mr[27mt[27m [27mK[27mU[27mB[27mE[27m_[27mC[27mO[27mN[27mT[27mE[27mX[27mT[27m=[27mg[27mp[27mu[27m-[27mt[27me[27ml[27me[27mm[27me[27mt[27mr[27my[?2004l
+[1m[7m%[27m[1m[0m                                                                                                                        ]7;file://Dhirajs-MacBook-Air.local/Users/dhirajsriharsha/Preparation/ProjectMsgQueue[0m[27m[24m[Jdhirajsriharsha@Dhirajs-MacBook-Air ProjectMsgQueue % [K[?2004h[7malias k='kubectl --context "$KUBE_CONTEXT" -n "$NAMESPACE"'[27m[59D[27ma[27ml[27mi[27ma[27ms[27m [27mk[27m=[27m'[27mk[27mu[27mb[27me[27mc[27mt[27ml[27m [27m-[27m-[27mc[27mo[27mn[27mt[27me[27mx[27mt[27m [27m"[27m$[27mK[27mU[27mB[27mE[27m_[27mC[27mO[27mN[27mT[27mE[27mX[27mT[27m"[27m [27m-[27mn[27m [27m"[27m$[27mN[27mA[27mM[27mE[27mS[27mP[27mA[27mC[27mE[27m"[27m'[?2004l
+[1m[7m%[27m[1m[0m                                                                                                                        ]7;file://Dhirajs-MacBook-Air.local/Users/dhirajsriharsha/Preparation/ProjectMsgQueue[0m[27m[24m[Jdhirajsriharsha@Dhirajs-MacBook-Air ProjectMsgQueue % [K[?2004h[7mset -o pipefail[27m[15D[27ms[27me[27mt[27m [27m-[27mo[27m [27mp[27mi[27mp[27me[27mf[27ma[27mi[27ml[?2004l
+[1m[7m%[27m[1m[0m                                                                                                                        ]7;file://Dhirajs-MacBook-Air.local/Users/dhirajsriharsha/Preparation/ProjectMsgQueue[0m[27m[24m[Jdhirajsriharsha@Dhirajs-MacBook-Air ProjectMsgQueue % [K[?2004heexit[?2004l
+
+Saving session...
+...saving history...truncating history files...
+...completed.
+
+Script done on Sun Sep 13 22:19:25 2026

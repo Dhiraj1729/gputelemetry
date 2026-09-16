@@ -1,0 +1,1 @@
+pod "gpu-telemetry-collector-85b6879c97-cpfk5" deleted from gpu-telemetry-day5 namespace

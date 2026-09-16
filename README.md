@@ -4,6 +4,22 @@ A Go telemetry pipeline that replays GPU metrics from a CSV, delivers them throu
 
 No physical GPU, NVIDIA driver, or DCGM installation is needed: the included dummy CSV supplies the measurements. This is an interview exercise with tested local deployment and explicit availability limits, not a production high-availability service.
 
+## Assignment submission
+
+This repository is the single entry point for the implementation, deployment instructions, demonstration and test evidence.
+
+| Item | Location |
+| --- | --- |
+| Demonstration video | [Watch or download the demo](https://github.com/Dhiraj1729/gputelemetry/releases/tag/submission-v1) |
+| Graphical installation | [Local deployment UI](#local-deployment-ui) |
+| Manual installation | [Fresh clone to running pods](#from-a-fresh-clone-to-running-pods) |
+| Test plan | [docs/TEST_PLAN.md](docs/TEST_PLAN.md) |
+| Test results | [docs/DAY6_VERIFICATION.md](docs/DAY6_VERIFICATION.md) |
+| Raw test evidence | [docs/test-artifacts](docs/test-artifacts) |
+| API contract | [api/openapi.yaml](api/openapi.yaml) |
+
+The demonstration video is distributed as a release asset so that normal clones remain small. The raw evidence is also checked into `docs/test-artifacts` as individually viewable text and JSON files.
+
 ## Architecture
 
 ```mermaid
@@ -21,7 +37,7 @@ flowchart LR
 - **Streamer:** periodically replays each CSV row; uses current UTC processing time for `processed_at` and preserves the historical source timestamp. Publish retries reuse the same event identity. Multiple replicas independently replay the dataset.
 - **Queue:** a custom HTTP broker backed by bbolt, with bounded admission, publisher deduplication, leases, ACK/NACK, quarantine, and durable restart recovery. It uses competing consumers, not broadcast delivery.
 - **Collector:** validates and persists events in PostgreSQL before acknowledging them. Unique `event_id` inserts make repeat persistence idempotent.
-- **API Gateway:** a separate Go HTTP service querying PostgreSQL directly. Typed Huma operations generate OpenAPI. It does not consume queue messages. No custom UI is required; `/docs` provides an interactive API reference.
+- **API Gateway:** a separate Go HTTP service querying PostgreSQL directly. Typed Huma operations generate OpenAPI. It does not consume queue messages. The API itself does not require a custom UI; `/docs` provides an interactive API reference. An optional local deployment console is included for setup and exploration.
 - **Migration job:** applies embedded schema migrations before application rollout.
 
 Delivery is **at least once**. Durability depends on retaining the underlying storage. The queue and PostgreSQL each run as one StatefulSet replica; neither is replicated. See [design decisions](docs/adr/0002-durable-single-broker.md) and [collector design](docs/DAY3_COLLECTOR.md).
@@ -61,6 +77,15 @@ Replace the placeholder with the namespace shown for your release. This preserve
 ## Local deployment UI
 
 The included macOS UI automates local environment preparation and deployment, and provides a basic view of the API data. After downloading or cloning the repository, open the project folder and double-click **`Start Console.command`**. The launcher starts the bundled console, detects the repository path and opens the UI in your browser. Apple Command Line Tools and Homebrew must be installed separately; the UI checks whether they are available.
+
+On the first launch, macOS may prevent the downloaded command or console binary from opening. If that happens:
+
+1. Open **System Settings → Privacy & Security**.
+2. Scroll to the security message for `Start Console.command` or `telemetry-console` and select **Open Anyway**.
+3. Confirm **Open** in the next macOS prompt.
+4. Double-click **`Start Console.command`** again if the console did not start automatically.
+
+Depending on the macOS version, the command launcher and the bundled console may each require this approval once. Only approve the files after obtaining them from this repository.
 
 From the UI you can install the project tools, start Colima and Minikube, build and load the images, choose up to 10 streamer and collector replicas, deploy with Helm, verify the running pipeline, connect to the API and browse telemetry by GPU. It also provides options to stop while retaining data, remove the deployment and its data, or remove the complete project environment. Use the execution log in the UI to follow each operation and investigate failures. The command-line workflow below remains available.
 
@@ -288,7 +313,7 @@ Stopping preserves local storage. Do not delete the namespace, PVCs or Minikube 
 | `make openapi`, `make check-openapi` | Generate/check the typed OpenAPI contract without a database |
 | `make helm-verify` | Live cluster ingestion and API verification |
 
-[Acceptance test evidence](docs/DAY6_VERIFICATION.md) records deployment, 3/3 scaling, backlog drainage, restarts and API checks. Recorded unit coverage is 69.2%; PostgreSQL integration coverage is not merged into that figure. TC03 and TC06 reruns passed on 14 September 2026. TC05 (10/10) and the final clean-clone build/deployment/video remain pending. Raw artifacts are held separately by the author; the public audit is a summary, not a bundled test transcript.
+[Acceptance test results](docs/DAY6_VERIFICATION.md) record deployment, API checks, 3/3 and brief 10/10 scaling, backlog drainage, restarts and final restoration to 1/1. Recorded unit coverage is 69.2%; PostgreSQL integration coverage is not merged into that figure. The documented [test plan](docs/TEST_PLAN.md) and [raw artifacts](docs/test-artifacts) are included in this repository. The 10/10 exercise was a short local capability test, not a sustained throughput benchmark.
 
 No broker replication, automatic scaling/HPA, authentication, UI, lease renewal or automatic telemetry retention is implemented. Services use internal ClusterIP access; the walkthrough exposes the API locally through port-forwarding.
 
@@ -296,4 +321,4 @@ No broker replication, automatic scaling/HPA, authentication, UI, lease renewal 
 
 AI assisted with architecture, scaffolding, implementation, tests, packaging and documentation. The author supplied requirements, ran the Mac/Kubernetes acceptance tests and reviewed the results. Contributions, corrections and limitations are recorded in [AI usage](docs/AI_USAGE.md). Exact reference prompts remain private and are not included in this public repository; see [submission audit](docs/SUBMISSION_AUDIT.md) for that outstanding submission item.
 
-The prior day-by-day README and repository map are in [workStructure](docs/workStructure.md). See [submission audit](docs/SUBMISSION_AUDIT.md) for the final test and video checklist.
+The prior day-by-day README and repository map are in [workStructure](docs/workStructure.md). See the [submission audit](docs/SUBMISSION_AUDIT.md) for documentation history and remaining acceptance considerations.

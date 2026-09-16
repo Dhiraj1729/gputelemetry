@@ -1,0 +1,10 @@
+===== TC08 pre-interruption state =====
+Mon Sep 14 01:11:58 IST 2026
+
+Collector pod:
+gpu-telemetry-collector-85b6879c97-cpfk5
+NAME                                       READY   STATUS    RESTARTS   AGE     IP            NODE            NOMINATED NODE   READINESS GATES
+gpu-telemetry-collector-85b6879c97-cpfk5   1/1     Running   0          9m50s   10.244.0.31   gpu-telemetry   <none>           <none>
+
+Pre-test PostgreSQL event counts:
+5762 | 5762 | 0

@@ -1,0 +1,13 @@
+===== TC07 pre-restart state =====
+Mon Sep 14 01:07:06 IST 2026
+
+Queue pod:
+NAME                    READY   STATUS    RESTARTS   AGE     IP            NODE            NOMINATED NODE   READINESS GATES
+gpu-telemetry-queue-0   1/1     Running   0          4m58s   10.244.0.34   gpu-telemetry   <none>           <none>
+
+Queue PVC:
+NAME                       STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS   VOLUMEATTRIBUTESCLASS   AGE     VOLUMEMODE
+gpu-telemetry-queue-data   Bound    pvc-c9ccd9fc-84e2-49b4-bcbe-cc552b9584d1   1Gi        RWO            standard       <unset>                 4m58s   Filesystem
+
+Queue pod UID:
+e1ef491a-cb51-4c71-ad78-fe89673f3615

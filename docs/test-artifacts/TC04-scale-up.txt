@@ -1,0 +1,16 @@
+Release "gpu-telemetry" has been upgraded. Happy Helming!
+NAME: gpu-telemetry
+LAST DEPLOYED: Mon Sep 14 00:14:54 2026
+NAMESPACE: gpu-telemetry-day5
+STATUS: deployed
+REVISION: 3
+DESCRIPTION: Upgrade complete
+TEST SUITE: None
+NOTES:
+Pipeline installed. API access:
+  kubectl -n gpu-telemetry-day5 port-forward service/gpu-telemetry-api 8080:8080
+  curl -fsS http://127.0.0.1:8080/api/v1/gpus
+Migration evidence: kubectl -n gpu-telemetry-day5 logs job/gpu-telemetry-migrate
+
+Queue replicas are fixed at one. PVCs and generated database credentials are retained on uninstall.
+Do not delete the namespace if you intend to retain those resources.

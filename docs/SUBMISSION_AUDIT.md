@@ -14,11 +14,11 @@ Audit date: 14 September 2026. Scope: documentation and evidence review; no appl
 | Generated OpenAPI and Makefile generator | `cmd/openapi`, `api/openapi.yaml`, `make openapi`, `make check-openapi` | Implemented |
 | Docker and Helm packaging | Shared Dockerfile, five custom images, Helm chart, bootstrap installer; TC02 | Local ARM64 deployment demonstrated |
 | Unit tests and Makefile coverage | `make test`, `make race`, `make coverage`; TC01 | Recorded 69.2% coverage |
-| Comprehensive README | Architecture, environment, build, install, sample API workflow, troubleshooting, AI links | Rewritten; final clean-clone run pending |
+| Comprehensive README | Architecture, environment, build, UI/manual installation, sample API workflow, troubleshooting, submission links | Implemented |
 | Detailed AI contributions and prompt records | `docs/AI_USAGE.md`; local `docs/prompts/` | Contributions documented; exact prompts excluded from public repo by author preference |
-| System tests (bonus) | `tests/system`, `tests/day3`, `tests/day4`, saved Kubernetes acceptance artifacts | Implemented / separately recorded |
+| System tests (bonus) | `tests/system`, `tests/day3`, `tests/day4`, saved Kubernetes acceptance artifacts | Implemented; raw evidence included under `docs/test-artifacts` |
 
-The PDF sets an exercise scale ceiling of ten streamers/collectors. It does not explicitly demand a recorded 10/10 benchmark. Nevertheless, behavior at that scale is unverified and should be disclosed; do not infer it from chart rendering or the 3/3 run.
+The PDF sets an exercise scale ceiling of ten streamers/collectors. A later short functional run reached 10/10 successfully; this demonstrates readiness and end-to-end behavior during that run, but it is not a sustained-load or throughput benchmark.
 
 The detailed prompt-record deliverable remains incomplete in the public repository. Arrange a private submission appendix or deliberately reviewed public record with the author before declaring full deliverable compliance. The private PDF and reference prompts must not be published automatically.
 
@@ -27,11 +27,11 @@ The detailed prompt-record deliverable remains incomplete in the public reposito
 1. Review TC03/TC06 reruns and record case-specific results: completed in this audit.
 2. Replace the chronological README with a reader-oriented runbook; retain history in `workStructure.md`: completed.
 3. Check documented paths, Make targets, chart rendering and OpenAPI freshness: outcomes recorded below after execution.
-4. Author reviews the final diff, resolves accidental untracked files, commits and pushes: pending.
-5. Author clones the pushed repository into a new directory and follows README build/install/verification: pending.
-6. Author records the final demonstration video after that acceptance run: pending.
+4. A later short TC05 run exercised 10 streamers and 10 collectors successfully and restored the stack to 1/1: completed; see `docs/test-artifacts`.
+5. Consolidate the portable test plan and raw artifacts into the repository: completed.
+6. Upload the recorded demonstration as a GitHub Release asset and verify the README link before submission: pending until the release is published.
 
-No Git staging, commit, push, destructive cleanup or deployment was performed for this documentation task. Pre-existing untracked files named `delete`, `pod`, and `gpu-telemetry-collector-85b6879c97-cpfk5` were observed and left untouched. Review them before staging; they appear to be terminal artifacts rather than project source.
+No Git staging, commit, push or deployment was performed during the documentation consolidation. Review the final diff and artifact contents before committing.
 
 ## Fresh-clone acceptance checklist
 
@@ -46,7 +46,7 @@ Capture:
 - Successful build/test/chart/OpenAPI commands.
 - Deployment, migration and PVC status; `make helm-verify` PASS.
 - API list, telemetry and inclusive bounds from the documented workflow.
-- Known limitations and whether TC05 remains deferred.
+- Known limitations and the distinction between the brief TC05 functional exercise and a sustained performance benchmark.
 
 ## Demo video outline (5-10 minutes)
 
@@ -70,4 +70,4 @@ Passed during this documentation audit:
 - Relative Markdown link checks for README, workStructure and both audit documents; documented Make targets exist.
 - `git diff --check`: no whitespace errors.
 
-The initial Make/Git validation attempt used the task workspace instead of the project directory and failed before running checks; rerunning from the project root produced the successful results above. Application build, full Go unit/race/coverage and live deployment were not rerun for this documentation-only change. Live fresh-clone deployment and video remain author-run follow-ups.
+The initial Make/Git validation attempt used the task workspace instead of the project directory and failed before running checks; rerunning from the project root produced the successful results above. Application build, full Go unit/race/coverage and live deployment were not rerun for that documentation-only review. A later saved test run includes the brief 10/10 exercise; publishing the recorded video as a GitHub Release remains an author follow-up.

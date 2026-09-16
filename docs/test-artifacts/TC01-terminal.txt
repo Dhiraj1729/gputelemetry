@@ -1,0 +1,196 @@
+Script started on Sun Sep 13 20:15:35 2026
+[1m[7m%[27m[1m[0m                                                                                                                        ]7;file://Dhirajs-MacBook-Air.local/Users/dhirajsriharsha/Preparation/ProjectMsgQueue[0m[27m[24m[Jdhirajsriharsha@Dhirajs-MacBook-Air ProjectMsgQueue % [K[?2004h[7mmake build[27m[10D[27mm[27ma[27mk[27me[27m [27mb[27mu[27mi[27ml[27md[?2004l
+mkdir -p bin
+go build -trimpath -o bin/queue ./cmd/queue
+go build -trimpath -o bin/streamer ./cmd/streamer
+go build -trimpath -o bin/testconsumer ./cmd/testconsumer
+go build -trimpath -o bin/collector ./cmd/collector
+go build -trimpath -o bin/migrate ./cmd/migrate
+go build -trimpath -o bin/api ./cmd/api
+[1m[7m%[27m[1m[0m                                                                                                                        ]7;file://Dhirajs-MacBook-Air.local/Users/dhirajsriharsha/Preparation/ProjectMsgQueue[0m[27m[24m[Jdhirajsriharsha@Dhirajs-MacBook-Air ProjectMsgQueue % [K[?2004h[7mmake test[27m[9D[27mm[27ma[27mk[27me[27m [27mt[27me[27ms[27mt[?2004l
+go test ./...
+?   	gpu-telemetry/cmd/api	[no test files]
+?   	gpu-telemetry/cmd/collector	[no test files]
+?   	gpu-telemetry/cmd/migrate	[no test files]
+?   	gpu-telemetry/cmd/openapi	[no test files]
+?   	gpu-telemetry/cmd/queue	[no test files]
+?   	gpu-telemetry/cmd/streamer	[no test files]
+?   	gpu-telemetry/cmd/testconsumer	[no test files]
+ok  	gpu-telemetry/internal/api	1.004s
+ok  	gpu-telemetry/internal/collector	(cached)
+ok  	gpu-telemetry/internal/config	(cached)
+ok  	gpu-telemetry/internal/observability	(cached)
+ok  	gpu-telemetry/internal/queue	(cached)
+ok  	gpu-telemetry/internal/queueclient	(cached)
+ok  	gpu-telemetry/internal/storage/postgres	(cached)
+ok  	gpu-telemetry/internal/streamer	(cached)
+ok  	gpu-telemetry/internal/telemetry	(cached)
+ok  	gpu-telemetry/internal/testconsumer	(cached)
+?   	gpu-telemetry/migrations	[no test files]
+?   	gpu-telemetry/tests/system	[no test files]
+[1m[7m%[27m[1m[0m                                                                                                                        ]7;file://Dhirajs-MacBook-Air.local/Users/dhirajsriharsha/Preparation/ProjectMsgQueue[0m[27m[24m[Jdhirajsriharsha@Dhirajs-MacBook-Air ProjectMsgQueue % [K[?2004h[7mmake race[27m[9D[27mm[27ma[27mk[27me[27m [27mr[27ma[27mc[27me[?2004l
+go test -race ./...
+?   	gpu-telemetry/cmd/api	[no test files]
+?   	gpu-telemetry/cmd/collector	[no test files]
+?   	gpu-telemetry/cmd/migrate	[no test files]
+?   	gpu-telemetry/cmd/openapi	[no test files]
+?   	gpu-telemetry/cmd/queue	[no test files]
+?   	gpu-telemetry/cmd/streamer	[no test files]
+?   	gpu-telemetry/cmd/testconsumer	[no test files]
+ok  	gpu-telemetry/internal/api	1.841s
+ok  	gpu-telemetry/internal/collector	(cached)
+ok  	gpu-telemetry/internal/config	(cached)
+ok  	gpu-telemetry/internal/observability	(cached)
+ok  	gpu-telemetry/internal/queue	(cached)
+ok  	gpu-telemetry/internal/queueclient	(cached)
+ok  	gpu-telemetry/internal/storage/postgres	(cached)
+ok  	gpu-telemetry/internal/streamer	(cached)
+ok  	gpu-telemetry/internal/telemetry	(cached)
+ok  	gpu-telemetry/internal/testconsumer	(cached)
+?   	gpu-telemetry/migrations	[no test files]
+?   	gpu-telemetry/tests/system	[no test files]
+[1m[7m%[27m[1m[0m                                                                                                                        ]7;file://Dhirajs-MacBook-Air.local/Users/dhirajsriharsha/Preparation/ProjectMsgQueue[0m[27m[24m[Jdhirajsriharsha@Dhirajs-MacBook-Air ProjectMsgQueue % [K[?2004h[7mmake coverage[27m[13D[27mm[27ma[27mk[27me[27m [27mc[27mo[27mv[27me[27mr[27ma[27mg[27me[?2004l
+mkdir -p coverage
+go test -coverprofile=coverage/coverage.out ./...
+	gpu-telemetry/cmd/api		coverage: 0.0% of statements
+	gpu-telemetry/cmd/collector		coverage: 0.0% of statements
+	gpu-telemetry/cmd/migrate		coverage: 0.0% of statements
+	gpu-telemetry/cmd/openapi		coverage: 0.0% of statements
+	gpu-telemetry/cmd/queue		coverage: 0.0% of statements
+	gpu-telemetry/cmd/streamer		coverage: 0.0% of statements
+	gpu-telemetry/cmd/testconsumer		coverage: 0.0% of statements
+ok  	gpu-telemetry/internal/api	0.519s	coverage: 92.8% of statements
+ok  	gpu-telemetry/internal/collector	(cached)	coverage: 91.5% of statements
+ok  	gpu-telemetry/internal/config	(cached)	coverage: 96.7% of statements
+ok  	gpu-telemetry/internal/observability	(cached)	coverage: 100.0% of statements
+ok  	gpu-telemetry/internal/queue	(cached)	coverage: 81.7% of statements
+ok  	gpu-telemetry/internal/queueclient	(cached)	coverage: 87.8% of statements
+ok  	gpu-telemetry/internal/storage/postgres	(cached)	coverage: 18.3% of statements
+ok  	gpu-telemetry/internal/streamer	(cached)	coverage: 86.9% of statements
+ok  	gpu-telemetry/internal/telemetry	(cached)	coverage: 93.8% of statements
+ok  	gpu-telemetry/internal/testconsumer	(cached)	coverage: 77.8% of statements
+	gpu-telemetry/migrations		coverage: 0.0% of statements
+?   	gpu-telemetry/tests/system	[no test files]
+go tool cover -func=coverage/coverage.out
+gpu-telemetry/cmd/api/main.go:19:			run			0.0%
+gpu-telemetry/cmd/api/main.go:68:			main			0.0%
+gpu-telemetry/cmd/collector/main.go:20:			run			0.0%
+gpu-telemetry/cmd/collector/main.go:64:			main			0.0%
+gpu-telemetry/cmd/migrate/main.go:12:			run			0.0%
+gpu-telemetry/cmd/migrate/main.go:29:			main			0.0%
+gpu-telemetry/cmd/openapi/main.go:16:			run			0.0%
+gpu-telemetry/cmd/openapi/main.go:41:			main			0.0%
+gpu-telemetry/cmd/queue/main.go:19:			run			0.0%
+gpu-telemetry/cmd/queue/main.go:83:			main			0.0%
+gpu-telemetry/cmd/streamer/main.go:17:			run			0.0%
+gpu-telemetry/cmd/streamer/main.go:41:			main			0.0%
+gpu-telemetry/cmd/testconsumer/main.go:18:		run			0.0%
+gpu-telemetry/cmd/testconsumer/main.go:42:		main			0.0%
+gpu-telemetry/internal/api/api.go:44:			New			95.3%
+gpu-telemetry/internal/api/api.go:95:			operation		100.0%
+gpu-telemetry/internal/api/api.go:103:			parseRange		96.3%
+gpu-telemetry/internal/api/api.go:149:			Write			100.0%
+gpu-telemetry/internal/api/api.go:160:			sendArray		89.5%
+gpu-telemetry/internal/api/api.go:242:			Read			66.7%
+gpu-telemetry/internal/collector/collector.go:27:	wait			100.0%
+gpu-telemetry/internal/collector/collector.go:37:	backoff			100.0%
+gpu-telemetry/internal/collector/collector.go:43:	pause			100.0%
+gpu-telemetry/internal/collector/collector.go:49:	Process			94.7%
+gpu-telemetry/internal/collector/collector.go:71:	retry			100.0%
+gpu-telemetry/internal/collector/collector.go:93:	Run			88.0%
+gpu-telemetry/internal/collector/collector.go:169:	safeError		60.0%
+gpu-telemetry/internal/collector/health.go:12:		HealthHandler		100.0%
+gpu-telemetry/internal/config/api.go:20:		DefaultAPI		100.0%
+gpu-telemetry/internal/config/api.go:23:		ParseAPI		100.0%
+gpu-telemetry/internal/config/collector.go:19:		ParseCollector		100.0%
+gpu-telemetry/internal/config/config.go:45:		common			100.0%
+gpu-telemetry/internal/config/config.go:49:		flags			100.0%
+gpu-telemetry/internal/config/config.go:54:		valid			100.0%
+gpu-telemetry/internal/config/config.go:63:		ParseStreamer		100.0%
+gpu-telemetry/internal/config/config.go:85:		ParseQueue		94.1%
+gpu-telemetry/internal/config/config.go:127:		ParseConsumer		86.4%
+gpu-telemetry/internal/observability/log.go:9:		New			100.0%
+gpu-telemetry/internal/queue/durable.go:50:		DefaultDurableOptions	100.0%
+gpu-telemetry/internal/queue/durable.go:53:		Validate		66.7%
+gpu-telemetry/internal/queue/durable.go:106:		OpenDurable		75.0%
+gpu-telemetry/internal/queue/durable.go:162:		Stop			100.0%
+gpu-telemetry/internal/queue/durable.go:163:		Close			100.0%
+gpu-telemetry/internal/queue/durable.go:167:		enter			44.4%
+gpu-telemetry/internal/queue/durable.go:186:		signal			100.0%
+gpu-telemetry/internal/queue/durable.go:192:		view			100.0%
+gpu-telemetry/internal/queue/durable.go:199:		update			92.9%
+gpu-telemetry/internal/queue/durable.go:219:		putJSON			75.0%
+gpu-telemetry/internal/queue/durable.go:226:		load			100.0%
+gpu-telemetry/internal/queue/durable.go:235:		indexKey		100.0%
+gpu-telemetry/internal/queue/durable.go:241:		dueFirst		100.0%
+gpu-telemetry/internal/queue/durable.go:248:		save			100.0%
+gpu-telemetry/internal/queue/durable.go:252:		Publish			100.0%
+gpu-telemetry/internal/queue/durable.go:255:		PublishContext		76.2%
+gpu-telemetry/internal/queue/durable.go:317:		Lease			90.3%
+gpu-telemetry/internal/queue/durable.go:365:		tryLease		78.6%
+gpu-telemetry/internal/queue/durable.go:421:		validateReceipt		100.0%
+gpu-telemetry/internal/queue/durable.go:427:		Ack			83.3%
+gpu-telemetry/internal/queue/durable.go:469:		Nack			87.8%
+gpu-telemetry/internal/queue/durable.go:526:		expireLeases		80.0%
+gpu-telemetry/internal/queue/durable.go:554:		removeCompleted		71.4%
+gpu-telemetry/internal/queue/durable.go:565:		expireCompleted		81.8%
+gpu-telemetry/internal/queue/durable.go:582:		Cleanup			85.7%
+gpu-telemetry/internal/queue/durable.go:604:		Snapshot		83.3%
+gpu-telemetry/internal/queue/durable_http.go:23:	decode			100.0%
+gpu-telemetry/internal/queue/durable_http.go:45:	durableError		44.4%
+gpu-telemetry/internal/queue/durable_http.go:63:	DurableHandler		65.3%
+gpu-telemetry/internal/queue/http.go:21:		Handler			86.0%
+gpu-telemetry/internal/queue/http.go:88:		respond			100.0%
+gpu-telemetry/internal/queue/http.go:93:		failure			100.0%
+gpu-telemetry/internal/queue/memory.go:52:		NewMemory		100.0%
+gpu-telemetry/internal/queue/memory.go:59:		Publish			90.6%
+gpu-telemetry/internal/queue/memory.go:104:		Receive			100.0%
+gpu-telemetry/internal/queue/memory.go:122:		Stats			100.0%
+gpu-telemetry/internal/queueclient/client.go:26:	Error			0.0%
+gpu-telemetry/internal/queueclient/client.go:27:	Retryable		100.0%
+gpu-telemetry/internal/queueclient/client.go:34:	New			100.0%
+gpu-telemetry/internal/queueclient/client.go:44:	Close			100.0%
+gpu-telemetry/internal/queueclient/client.go:46:	request			83.3%
+gpu-telemetry/internal/queueclient/client.go:73:	Publish			83.3%
+gpu-telemetry/internal/queueclient/client.go:91:	Receive			100.0%
+gpu-telemetry/internal/queueclient/client.go:112:	Lease			100.0%
+gpu-telemetry/internal/queueclient/client.go:121:	LeaseForProcessing	66.7%
+gpu-telemetry/internal/queueclient/client.go:127:	lease			90.0%
+gpu-telemetry/internal/queueclient/client.go:142:	receipt			80.0%
+gpu-telemetry/internal/queueclient/client.go:157:	Ack			100.0%
+gpu-telemetry/internal/queueclient/client.go:160:	Nack			100.0%
+gpu-telemetry/internal/storage/postgres/read.go:35:	VisitGPUs		0.0%
+gpu-telemetry/internal/storage/postgres/read.go:54:	VisitTelemetry		0.0%
+gpu-telemetry/internal/storage/postgres/store.go:19:	Open			100.0%
+gpu-telemetry/internal/storage/postgres/store.go:24:	OpenReadOnly		0.0%
+gpu-telemetry/internal/storage/postgres/store.go:27:	open			26.3%
+gpu-telemetry/internal/storage/postgres/store.go:52:	Close			0.0%
+gpu-telemetry/internal/storage/postgres/store.go:53:	Ready			0.0%
+gpu-telemetry/internal/storage/postgres/store.go:60:	Validate		100.0%
+gpu-telemetry/internal/storage/postgres/store.go:79:	Persist			10.0%
+gpu-telemetry/internal/streamer/csv.go:29:		Error			100.0%
+gpu-telemetry/internal/streamer/csv.go:40:		OpenCSV			73.3%
+gpu-telemetry/internal/streamer/csv.go:61:		Close			100.0%
+gpu-telemetry/internal/streamer/csv.go:62:		reset			86.7%
+gpu-telemetry/internal/streamer/csv.go:88:		Next			88.6%
+gpu-telemetry/internal/streamer/run.go:41:		Wait			100.0%
+gpu-telemetry/internal/streamer/run.go:55:		Run			87.7%
+gpu-telemetry/internal/telemetry/event.go:40:		NewID			75.0%
+gpu-telemetry/internal/telemetry/event.go:48:		Validate		100.0%
+gpu-telemetry/internal/telemetry/event.go:58:		Validate		100.0%
+gpu-telemetry/internal/testconsumer/run.go:25:		Run			77.8%
+gpu-telemetry/migrations/migrations.go:18:		Apply			0.0%
+total:							(statements)		69.2%
+go tool cover -html=coverage/coverage.out -o coverage/coverage.html
+[1m[7m%[27m[1m[0m                                                                                                                        ]7;file://Dhirajs-MacBook-Air.local/Users/dhirajsriharsha/Preparation/ProjectMsgQueue[0m[27m[24m[Jdhirajsriharsha@Dhirajs-MacBook-Air ProjectMsgQueue % [K[?2004h[7mmake check-openapi[27m[18D[27mm[27ma[27mk[27me[27m [27mc[27mh[27me[27mc[27mk[27m-[27mo[27mp[27me[27mn[27ma[27mp[27mi[?2004l
+go run ./cmd/openapi --check
+OpenAPI is current
+[1m[7m%[27m[1m[0m                                                                                                                        ]7;file://Dhirajs-MacBook-Air.local/Users/dhirajsriharsha/Preparation/ProjectMsgQueue[0m[27m[24m[Jdhirajsriharsha@Dhirajs-MacBook-Air ProjectMsgQueue % [K[?2004heexit' [?2004l
+
+Saving session...
+...copying shared history...
+...saving history...truncating history files...
+...completed.
+Deleting expired sessions...none found.
+
+Script done on Sun Sep 13 20:18:49 2026

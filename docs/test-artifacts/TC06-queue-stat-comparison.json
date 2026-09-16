@@ -1,0 +1,47 @@
+{
+  "initial": {
+    "ready": 0,
+    "leased": 0,
+    "quarantined": 0,
+    "completed": 3498,
+    "logical_bytes": 3581952,
+    "accepted": 3498,
+    "acked": 3498,
+    "deliveries": 3498,
+    "redeliveries": 0,
+    "file_bytes": 4194304,
+    "capacity": 1000,
+    "max_logical_bytes": 67108864,
+    "cleanup_failures": 0
+  },
+  "paused": {
+    "ready": 579,
+    "leased": 0,
+    "quarantined": 0,
+    "completed": 3617,
+    "logical_bytes": 6533243,
+    "accepted": 4196,
+    "acked": 3617,
+    "deliveries": 3618,
+    "redeliveries": 0,
+    "file_bytes": 8388608,
+    "capacity": 1000,
+    "max_logical_bytes": 67108864,
+    "cleanup_failures": 0
+  },
+  "recovered": {
+    "ready": 0,
+    "leased": 0,
+    "quarantined": 0,
+    "completed": 4983,
+    "logical_bytes": 5102592,
+    "accepted": 4983,
+    "acked": 4983,
+    "deliveries": 4984,
+    "redeliveries": 1,
+    "file_bytes": 8388608,
+    "capacity": 1000,
+    "max_logical_bytes": 67108864,
+    "cleanup_failures": 0
+  }
+}

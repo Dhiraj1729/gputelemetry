@@ -1,0 +1,16 @@
+USER-SUPPLIED VALUES:
+bootstrapOnly: false
+collector:
+  poolMax: 2
+  replicas: 1
+  workers: 1
+images:
+  repository: gpu-telemetry
+  tag: dev
+queue:
+  capacity: 2000
+  completionTTL: 10m
+  dedupCapacity: 20000
+streamer:
+  rate: 2
+  replicas: 1

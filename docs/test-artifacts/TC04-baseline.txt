@@ -1,0 +1,18 @@
+===== TC04 baseline: 1 streamer / 1 collector =====
+Mon Sep 14 00:14:37 IST 2026
+NAME                                      READY   UP-TO-DATE   AVAILABLE   AGE   CONTAINERS   IMAGES                        SELECTOR
+deployment.apps/gpu-telemetry-api         1/1     1            1           2m    api          gpu-telemetry/api:dev         app.kubernetes.io/component=api,app.kubernetes.io/instance=gpu-telemetry,app.kubernetes.io/name=gpu-telemetry
+deployment.apps/gpu-telemetry-collector   1/1     1            1           2m    collector    gpu-telemetry/collector:dev   app.kubernetes.io/component=collector,app.kubernetes.io/instance=gpu-telemetry,app.kubernetes.io/name=gpu-telemetry
+deployment.apps/gpu-telemetry-streamer    1/1     1            1           2m    streamer     gpu-telemetry/streamer:dev    app.kubernetes.io/component=streamer,app.kubernetes.io/instance=gpu-telemetry,app.kubernetes.io/name=gpu-telemetry
+
+NAME                                        READY   AGE    CONTAINERS   IMAGES
+statefulset.apps/gpu-telemetry-postgresql   1/1     2m6s   postgresql   postgres:18.6@sha256:4ef4dbc939d61acea57712655ddb4b4ab27419c913f94cca0cd57cb3ea3c2280
+statefulset.apps/gpu-telemetry-queue        1/1     2m     queue        gpu-telemetry/queue:dev
+
+NAME                                           READY   STATUS      RESTARTS   AGE    IP            NODE            NOMINATED NODE   READINESS GATES
+pod/gpu-telemetry-api-6fbd895b64-rdqxg         1/1     Running     0          2m     10.244.0.18   gpu-telemetry   <none>           <none>
+pod/gpu-telemetry-collector-85b6879c97-cc5qj   1/1     Running     0          2m     10.244.0.16   gpu-telemetry   <none>           <none>
+pod/gpu-telemetry-migrate-j9zlz                0/1     Completed   0          2m2s   10.244.0.15   gpu-telemetry   <none>           <none>
+pod/gpu-telemetry-postgresql-0                 1/1     Running     0          2m6s   10.244.0.14   gpu-telemetry   <none>           <none>
+pod/gpu-telemetry-queue-0                      1/1     Running     0          2m     10.244.0.19   gpu-telemetry   <none>           <none>
+pod/gpu-telemetry-streamer-cbff6c649-4mhjj     1/1     Running     0          2m     10.244.0.17   gpu-telemetry   <none>           <none>

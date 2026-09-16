@@ -1,0 +1,2 @@
+NAME                                       READY   STATUS    RESTARTS   AGE   IP            NODE            NOMINATED NODE   READINESS GATES
+gpu-telemetry-collector-85b6879c97-m7kpx   1/1     Running   0          22s   10.244.0.36   gpu-telemetry   <none>           <none>

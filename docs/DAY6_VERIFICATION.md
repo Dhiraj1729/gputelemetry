@@ -1,8 +1,8 @@
 # Day 6 evidence review
 
-Reviewed 14 September 2026 from author-supplied `Day6-TestCases.txt` and the separate local artifacts directory. This is a review of saved command output, not a claim that the documentation editor reran the live cluster tests. Raw files remain outside this repository.
+Reviewed 14 September 2026 from the author-supplied test plan and saved command output. This is a review of recorded evidence, not a claim that the documentation editor reran the live cluster tests. The portable [test plan](TEST_PLAN.md) and [raw artifacts](test-artifacts) are included in this repository.
 
-**Status: core functional tests passed; TC05 maximum-scale runtime exercise deferred.** The final clean-clone acceptance run and demonstration video are still pending.
+**Status: all nine recorded functional test cases passed, including a brief 10-streamer/10-collector exercise.** TC05 was a short local capability test, not a sustained performance benchmark.
 
 | Case | Result | Evidence and limits |
 | --- | --- | --- |
@@ -10,7 +10,7 @@ Reviewed 14 September 2026 from author-supplied `Day6-TestCases.txt` and the sep
 | TC02 | Pass | `TC02-terminal-ext.txt`: verifier PASS, 1,706 rows equal 1,706 distinct IDs, healthy deployment/migration/PVCs. |
 | TC03 | Pass, rerun | New terminal log dated 14 September: 247 GPUs, nine telemetry records, ordering true, one exact inclusive-boundary result. Saved JSON independently checked during this audit. |
 | TC04 | Pass | `TC04-scaled-state.txt`, `TC04-helm-verify-3x3.txt`, `TC04-final-state.txt`: 1/1 to 3/3 to 1/1 and verifier PASS. |
-| TC05 | Deferred | 10 streamers and 10 collectors not run due to laptop resource constraints. No maximum-scale performance claim. |
+| TC05 | Pass | Ten streamer and ten collector pods became Ready; the verifier passed; the deployment was restored to 1/1. This was a brief functional exercise, not a sustained-load claim. |
 | TC06 | Pass, rerun | Ready count 0 -> 579 -> 0; ACK count 3,498 -> 3,617 -> 4,983. Recovered accepted=ACKed=4,983, leased=quarantined=0, redeliveries=1. New verifier PASS with 5,242 distinct DB rows. |
 | TC07 | Pass within test run | Queue pod UID changed; bound queue PVC retained volume `pvc-c9ccd9fc-84e2-49b4-bcbe-cc552b9584d1`; verifier PASS. Pre-restart backlog was empty: not a dedicated pending-backlog crash test. |
 | TC08 | Pass | Collector replaced and Ready; DB total/distinct counts advanced 5,762 -> 6,427; verifier PASS. Pod deletion alone does not establish a forced crash specifically between commit and ACK. |
@@ -24,11 +24,11 @@ Different test groups have different PVC identities and database counters. Treat
 
 Queue counters demonstrate backlog drainage and a redelivery in the TC06 rerun; they do not alone prove an exhaustive event-by-event no-loss invariant. Equal DB total/distinct counts demonstrate unique persisted event identities, not exactly-once delivery. Stronger commit-before-ACK crash evidence lives in the Day 3 PostgreSQL test suite and its separately recorded results.
 
-No throughput benchmark, sustained 10/10 test, hardware resource profile, or PostgreSQL outage exercise in Kubernetes is established by this artifact set. Earlier real-PostgreSQL integration tests cover outage/timeout behavior separately.
+No throughput benchmark, sustained 10/10 endurance test, hardware resource profile, or PostgreSQL outage exercise in Kubernetes is established by this artifact set. Earlier real-PostgreSQL integration tests cover outage/timeout behavior separately.
 
 ## Rerun artifact fingerprints
 
-SHA-256 fingerprints identify the exact files reviewed, without copying the author's raw telemetry/logs into the public repository.
+SHA-256 fingerprints identify the rerun files reviewed. The raw telemetry and logs are now available under [`docs/test-artifacts`](test-artifacts).
 
 | File | SHA-256 |
 | --- | --- |

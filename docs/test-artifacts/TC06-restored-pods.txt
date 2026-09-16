@@ -1,0 +1,12 @@
+NAME                                      READY   UP-TO-DATE   AVAILABLE   AGE     CONTAINERS   IMAGES                        SELECTOR
+deployment.apps/gpu-telemetry-api         1/1     1            1           7m55s   api          gpu-telemetry/api:dev         app.kubernetes.io/component=api,app.kubernetes.io/instance=gpu-telemetry,app.kubernetes.io/name=gpu-telemetry
+deployment.apps/gpu-telemetry-collector   1/1     1            1           7m55s   collector    gpu-telemetry/collector:dev   app.kubernetes.io/component=collector,app.kubernetes.io/instance=gpu-telemetry,app.kubernetes.io/name=gpu-telemetry
+deployment.apps/gpu-telemetry-streamer    1/1     1            1           7m55s   streamer     gpu-telemetry/streamer:dev    app.kubernetes.io/component=streamer,app.kubernetes.io/instance=gpu-telemetry,app.kubernetes.io/name=gpu-telemetry
+
+NAME                                           READY   STATUS      RESTARTS   AGE     IP            NODE            NOMINATED NODE   READINESS GATES
+pod/gpu-telemetry-api-6fbd895b64-n6bc9         1/1     Running     0          7m55s   10.244.0.7    gpu-telemetry   <none>           <none>
+pod/gpu-telemetry-collector-85b6879c97-5rpb2   1/1     Running     0          17s     10.244.0.11   gpu-telemetry   <none>           <none>
+pod/gpu-telemetry-migrate-9sccm                0/1     Completed   0          20s     10.244.0.10   gpu-telemetry   <none>           <none>
+pod/gpu-telemetry-postgresql-0                 1/1     Running     0          8m1s    10.244.0.3    gpu-telemetry   <none>           <none>
+pod/gpu-telemetry-queue-0                      1/1     Running     0          7m55s   10.244.0.8    gpu-telemetry   <none>           <none>
+pod/gpu-telemetry-streamer-cbff6c649-lz2lg     1/1     Running     0          7m55s   10.244.0.6    gpu-telemetry   <none>           <none>

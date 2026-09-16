@@ -1,0 +1,201 @@
+===== Test Case 02: Helm deployment and end-to-end verification =====
+Sun Sep 13 22:20:22 IST 2026
+
+===== Helm release =====
+dhirajsriharsha@Dhirajs-MacBook-Air ProjectMsgQueue % helm status gpu-telemetry -n gpu-telemetry-day5
+NAME: gpu-telemetry
+LAST DEPLOYED: Sun Sep 13 22:17:26 2026
+NAMESPACE: gpu-telemetry-day5
+STATUS: deployed
+REVISION: 2
+DESCRIPTION: Upgrade complete
+RESOURCES:
+==> v1/Secret
+NAME                     TYPE     DATA   AGE
+gpu-telemetry-database   Opaque   2      7m
+
+==> v1/PersistentVolumeClaim
+NAME                            STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS   VOLUMEATTRIBUTESCLASS   AGE
+gpu-telemetry-postgresql-data   Bound    pvc-54a76f3c-a2b8-450f-bd73-7fc09cee5d3b   2Gi        RWO            standard       <unset>                 7m
+gpu-telemetry-queue-data   Bound   pvc-deede32a-87f3-468c-868e-9bbd07f0dd6b   1Gi   RWO   standard   <unset>   6m54s
+
+==> v1/Service
+NAME                TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)    AGE
+gpu-telemetry-api   ClusterIP   10.105.119.182   <none>        8080/TCP   6m54s
+gpu-telemetry-collector   ClusterIP   10.102.198.44   <none>   8082/TCP   6m54s
+gpu-telemetry-postgresql   ClusterIP   None   <none>   5432/TCP   7m
+gpu-telemetry-queue   ClusterIP   None   <none>   8081/TCP   6m54s
+
+==> v1/Deployment
+NAME                READY   UP-TO-DATE   AVAILABLE   AGE
+gpu-telemetry-api   1/1     1            1           6m54s
+gpu-telemetry-collector   1/1   1     1     6m54s
+gpu-telemetry-streamer   1/1   1     1     6m54s
+
+==> v1/Pod(related)
+NAME                                 READY   STATUS    RESTARTS   AGE
+gpu-telemetry-api-6fbd895b64-5mjx6   1/1     Running   0          6m54s
+gpu-telemetry-collector-85b6879c97-4hr7l   1/1   Running   0     6m54s
+gpu-telemetry-streamer-cbff6c649-hkzx9   1/1   Running   0     6m54s
+gpu-telemetry-postgresql-0   1/1   Running   0     7m
+gpu-telemetry-queue-0   1/1   Running   0     6m54s
+
+==> v1/StatefulSet
+NAME                       READY   AGE
+gpu-telemetry-postgresql   1/1     7m
+gpu-telemetry-queue   1/1   6m54s
+
+
+TEST SUITE: None
+NOTES:
+Pipeline installed. API access:
+  kubectl -n gpu-telemetry-day5 port-forward service/gpu-telemetry-api 8080:8080
+  curl -fsS http://127.0.0.1:8080/api/v1/gpus
+Migration evidence: kubectl -n gpu-telemetry-day5 logs job/gpu-telemetry-migrate
+
+Queue replicas are fixed at one. PVCs and generated database credentials are retained on uninstall.
+Do not delete the namespace if you intend to retain those resources.
+
+===== Helm values =====
+dhirajsriharsha@Dhirajs-MacBook-Air ProjectMsgQueue % helm get values gpu-telemetry -n gpu-telemetry-day5
+USER-SUPPLIED VALUES:
+bootstrapOnly: false
+images:
+  repository: gpu-telemetry
+  tag: dev
+
+===== Helm verification =====
+bash scripts/day5-verify.sh
+partitioned roll out complete: 1 new pods have been updated...
+partitioned roll out complete: 1 new pods have been updated...
+deployment "gpu-telemetry-streamer" successfully rolled out
+deployment "gpu-telemetry-collector" successfully rolled out
+deployment "gpu-telemetry-api" successfully rolled out
+job.batch/gpu-telemetry-migrate condition met
+NAME                                           READY   STATUS      RESTARTS   AGE
+pod/gpu-telemetry-api-6fbd895b64-5mjx6         1/1     Running     0          2m53s
+pod/gpu-telemetry-collector-85b6879c97-4hr7l   1/1     Running     0          2m53s
+pod/gpu-telemetry-migrate-czrsp                0/1     Completed   0          2m56s
+pod/gpu-telemetry-postgresql-0                 1/1     Running     0          2m59s
+pod/gpu-telemetry-queue-0                      1/1     Running     0          2m53s
+pod/gpu-telemetry-streamer-cbff6c649-hkzx9     1/1     Running     0          2m53s
+
+NAME                              STATUS     COMPLETIONS   DURATION   AGE
+job.batch/gpu-telemetry-migrate   Complete   1/1           3s         2m56s
+
+NAME                               TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)    AGE
+service/gpu-telemetry-api          ClusterIP   10.105.119.182   <none>        8080/TCP   2m53s
+service/gpu-telemetry-collector    ClusterIP   10.102.198.44    <none>        8082/TCP   2m53s
+service/gpu-telemetry-postgresql   ClusterIP   None             <none>        5432/TCP   2m59s
+service/gpu-telemetry-queue        ClusterIP   None             <none>        8081/TCP   2m53s
+
+NAME                                                  STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS   VOLUMEATTRIBUTESCLASS   AGE
+persistentvolumeclaim/gpu-telemetry-postgresql-data   Bound    pvc-54a76f3c-a2b8-450f-bd73-7fc09cee5d3b   2Gi        RWO            standard       <unset>                 2m59s
+persistentvolumeclaim/gpu-telemetry-queue-data        Bound    pvc-deede32a-87f3-468c-868e-9bbd07f0dd6b   1Gi        RWO            standard       <unset>                 2m53s
+migration 001 applied or already current
+{"status":"ok"}
+{"status":"ready"}
+ events | unique_events 
+--------+---------------
+   1706 |          1706
+(1 row)
+
+{"time":"2026-09-13T16:47:29.649944946Z","level":"WARN","msg":"publish retry","event_id":"f92cb86495c9adef5780486f496e0b7a:0:1","retry":2,"error":"queue HTTP 0: Post \"http://gpu-telemetry-queue:8081/internal/v1/messages\": dial tcp: lookup gpu-telemetry-queue on 10.96.0.10:53: no such host"}
+{"time":"2026-09-13T16:47:29.84585787Z","level":"WARN","msg":"publish retry","event_id":"f92cb86495c9adef5780486f496e0b7a:0:1","retry":3,"error":"queue HTTP 0: Post \"http://gpu-telemetry-queue:8081/internal/v1/messages\": dial tcp: lookup gpu-telemetry-queue on 10.96.0.10:53: no such host"}
+{"time":"2026-09-13T16:47:30.126782618Z","level":"WARN","msg":"publish retry","event_id":"f92cb86495c9adef5780486f496e0b7a:0:1","retry":4,"error":"queue HTTP 0: Post \"http://gpu-telemetry-queue:8081/internal/v1/messages\": dial tcp: lookup gpu-telemetry-queue on 10.96.0.10:53: no such host"}
+{"time":"2026-09-13T16:47:30.826939723Z","level":"WARN","msg":"publish retry","event_id":"f92cb86495c9adef5780486f496e0b7a:0:1","retry":5,"error":"queue HTTP 0: Post \"http://gpu-telemetry-queue:8081/internal/v1/messages\": dial tcp: lookup gpu-telemetry-queue on 10.96.0.10:53: no such host"}
+{"time":"2026-09-13T16:47:31.902606994Z","level":"WARN","msg":"publish retry","event_id":"f92cb86495c9adef5780486f496e0b7a:0:1","retry":6,"error":"queue HTTP 0: Post \"http://gpu-telemetry-queue:8081/internal/v1/messages\": dial tcp: lookup gpu-telemetry-queue on 10.96.0.10:53: no such host"}
+{"time":"2026-09-13T16:50:24.770484008Z","level":"INFO","msg":"telemetry committed","event_id":"f92cb86495c9adef5780486f496e0b7a:0:1702","attempt":1}
+{"time":"2026-09-13T16:50:24.871107385Z","level":"INFO","msg":"telemetry committed","event_id":"f92cb86495c9adef5780486f496e0b7a:0:1703","attempt":1}
+{"time":"2026-09-13T16:50:24.972262001Z","level":"INFO","msg":"telemetry committed","event_id":"f92cb86495c9adef5780486f496e0b7a:0:1704","attempt":1}
+{"time":"2026-09-13T16:50:25.072494748Z","level":"INFO","msg":"telemetry committed","event_id":"f92cb86495c9adef5780486f496e0b7a:0:1705","attempt":1}
+{"time":"2026-09-13T16:50:25.171666976Z","level":"INFO","msg":"telemetry committed","event_id":"f92cb86495c9adef5780486f496e0b7a:0:1706","attempt":1}
+PASS: PVCs bound, migration complete, API data present, queue ACKs observed, queue replicas=1.
+
+===== Kubernetes resources =====
+dhirajsriharsha@Dhirajs-MacBook-Air ProjectMsgQueue % kubectl get deploy,statefulset,pods,jobs,services,pvc -o wide -n gpu-telemetry-day5
+NAME                                      READY   UP-TO-DATE   AVAILABLE   AGE     CONTAINERS   IMAGES                        SELECTOR
+deployment.apps/gpu-telemetry-api         1/1     1            1           8m26s   api          gpu-telemetry/api:dev         app.kubernetes.io/component=api,app.kubernetes.io/instance=gpu-telemetry,app.kubernetes.io/name=gpu-telemetry
+deployment.apps/gpu-telemetry-collector   1/1     1            1           8m26s   collector    gpu-telemetry/collector:dev   app.kubernetes.io/component=collector,app.kubernetes.io/instance=gpu-telemetry,app.kubernetes.io/name=gpu-telemetry
+deployment.apps/gpu-telemetry-streamer    1/1     1            1           8m26s   streamer     gpu-telemetry/streamer:dev    app.kubernetes.io/component=streamer,app.kubernetes.io/instance=gpu-telemetry,app.kubernetes.io/name=gpu-telemetry
+
+NAME                                        READY   AGE     CONTAINERS   IMAGES
+statefulset.apps/gpu-telemetry-postgresql   1/1     8m32s   postgresql   postgres:18.6@sha256:4ef4dbc939d61acea57712655ddb4b4ab27419c913f94cca0cd57cb3ea3c2280
+statefulset.apps/gpu-telemetry-queue        1/1     8m26s   queue        gpu-telemetry/queue:dev
+
+NAME                                           READY   STATUS      RESTARTS   AGE     IP           NODE            NOMINATED NODE   READINESS GATES
+pod/gpu-telemetry-api-6fbd895b64-5mjx6         1/1     Running     0          8m26s   10.244.0.7   gpu-telemetry   <none>           <none>
+pod/gpu-telemetry-collector-85b6879c97-4hr7l   1/1     Running     0          8m26s   10.244.0.5   gpu-telemetry   <none>           <none>
+pod/gpu-telemetry-migrate-czrsp                0/1     Completed   0          8m29s   10.244.0.4   gpu-telemetry   <none>           <none>
+pod/gpu-telemetry-postgresql-0                 1/1     Running     0          8m32s   10.244.0.3   gpu-telemetry   <none>           <none>
+pod/gpu-telemetry-queue-0                      1/1     Running     0          8m26s   10.244.0.8   gpu-telemetry   <none>           <none>
+pod/gpu-telemetry-streamer-cbff6c649-hkzx9     1/1     Running     0          8m26s   10.244.0.6   gpu-telemetry   <none>           <none>
+
+NAME                              STATUS     COMPLETIONS   DURATION   AGE     CONTAINERS   IMAGES                      SELECTOR
+job.batch/gpu-telemetry-migrate   Complete   1/1           3s         8m29s   migrate      gpu-telemetry/migrate:dev   batch.kubernetes.io/controller-uid=72aa35f1-346f-4322-933d-823d16154ed6
+
+NAME                               TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)    AGE     SELECTOR
+service/gpu-telemetry-api          ClusterIP   10.105.119.182   <none>        8080/TCP   8m26s   app.kubernetes.io/component=api,app.kubernetes.io/instance=gpu-telemetry,app.kubernetes.io/name=gpu-telemetry
+service/gpu-telemetry-collector    ClusterIP   10.102.198.44    <none>        8082/TCP   8m26s   app.kubernetes.io/component=collector,app.kubernetes.io/instance=gpu-telemetry,app.kubernetes.io/name=gpu-telemetry
+service/gpu-telemetry-postgresql   ClusterIP   None             <none>        5432/TCP   8m32s   app.kubernetes.io/component=postgresql,app.kubernetes.io/instance=gpu-telemetry,app.kubernetes.io/name=gpu-telemetry
+service/gpu-telemetry-queue        ClusterIP   None             <none>        8081/TCP   8m26s   app.kubernetes.io/component=queue,app.kubernetes.io/instance=gpu-telemetry,app.kubernetes.io/name=gpu-telemetry
+
+NAME                                                  STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS   VOLUMEATTRIBUTESCLASS   AGE     VOLUMEMODE
+persistentvolumeclaim/gpu-telemetry-postgresql-data   Bound    pvc-54a76f3c-a2b8-450f-bd73-7fc09cee5d3b   2Gi        RWO            standard       <unset>                 8m32s   Filesystem
+persistentvolumeclaim/gpu-telemetry-queue-data        Bound    pvc-deede32a-87f3-468c-868e-9bbd07f0dd6b   1Gi        RWO            standard       <unset>                 8m26s   Filesystem
+
+===== Recent Kubernetes events =====
+
+dhirajsriharsha@Dhirajs-MacBook-Air ProjectMsgQueue % kubectl get events --sort-by=.lastTimestamp -n gpu-telemetry-day5
+LAST SEEN   TYPE     REASON                  OBJECT                                                MESSAGE
+9m1s        Normal   Created                 pod/gpu-telemetry-postgresql-0                        Container created
+9m1s        Normal   SuccessfulCreate        statefulset/gpu-telemetry-postgresql                  Create Pod gpu-telemetry-postgresql-0 in StatefulSet gpu-telemetry-postgresql successful
+9m1s        Normal   ProvisioningSucceeded   persistentvolumeclaim/gpu-telemetry-postgresql-data   Successfully provisioned volume pvc-54a76f3c-a2b8-450f-bd73-7fc09cee5d3b
+9m1s        Normal   Provisioning            persistentvolumeclaim/gpu-telemetry-postgresql-data   External provisioner is provisioning volume for claim "gpu-telemetry-day5/gpu-telemetry-postgresql-data"
+9m1s        Normal   ExternalProvisioning    persistentvolumeclaim/gpu-telemetry-postgresql-data   Waiting for a volume to be created either by the external provisioner 'k8s.io/minikube-hostpath' or manually by the system administrator. If volume creation is delayed, please verify that the provisioner is running and correctly registered.
+9m1s        Normal   Started                 pod/gpu-telemetry-postgresql-0                        Container started
+9m1s        Normal   Pulled                  pod/gpu-telemetry-postgresql-0                        Container image "postgres:18.6@sha256:4ef4dbc939d61acea57712655ddb4b4ab27419c913f94cca0cd57cb3ea3c2280" already present on machine and can be accessed by the pod
+9m1s        Normal   Scheduled               pod/gpu-telemetry-postgresql-0                        Successfully assigned gpu-telemetry-day5/gpu-telemetry-postgresql-0 to gpu-telemetry
+8m58s       Normal   Pulled                  pod/gpu-telemetry-migrate-czrsp                       Container image "gpu-telemetry/migrate:dev" already present on machine and can be accessed by the pod
+8m58s       Normal   SuccessfulCreate        job/gpu-telemetry-migrate                             Created pod: gpu-telemetry-migrate-czrsp
+8m58s       Normal   Started                 pod/gpu-telemetry-migrate-czrsp                       Container started
+8m58s       Normal   Created                 pod/gpu-telemetry-migrate-czrsp                       Container created
+8m58s       Normal   Scheduled               pod/gpu-telemetry-migrate-czrsp                       Successfully assigned gpu-telemetry-day5/gpu-telemetry-migrate-czrsp to gpu-telemetry
+8m55s       Normal   SuccessfulCreate        replicaset/gpu-telemetry-collector-85b6879c97         Created pod: gpu-telemetry-collector-85b6879c97-4hr7l
+8m55s       Normal   Scheduled               pod/gpu-telemetry-queue-0                             Successfully assigned gpu-telemetry-day5/gpu-telemetry-queue-0 to gpu-telemetry
+8m55s       Normal   Scheduled               pod/gpu-telemetry-api-6fbd895b64-5mjx6                Successfully assigned gpu-telemetry-day5/gpu-telemetry-api-6fbd895b64-5mjx6 to gpu-telemetry
+8m55s       Normal   Started                 pod/gpu-telemetry-collector-85b6879c97-4hr7l          Container started
+8m55s       Normal   Completed               job/gpu-telemetry-migrate                             Job completed
+8m55s       Normal   Created                 pod/gpu-telemetry-collector-85b6879c97-4hr7l          Container created
+8m55s       Normal   Pulled                  pod/gpu-telemetry-collector-85b6879c97-4hr7l          Container image "gpu-telemetry/collector:dev" already present on machine and can be accessed by the pod
+8m55s       Normal   Scheduled               pod/gpu-telemetry-collector-85b6879c97-4hr7l          Successfully assigned gpu-telemetry-day5/gpu-telemetry-collector-85b6879c97-4hr7l to gpu-telemetry
+8m55s       Normal   ScalingReplicaSet       deployment/gpu-telemetry-api                          Scaled up replica set gpu-telemetry-api-6fbd895b64 from 0 to 1
+8m55s       Normal   SuccessfulCreate        replicaset/gpu-telemetry-api-6fbd895b64               Created pod: gpu-telemetry-api-6fbd895b64-5mjx6
+8m55s       Normal   Started                 pod/gpu-telemetry-api-6fbd895b64-5mjx6                Container started
+8m55s       Normal   Created                 pod/gpu-telemetry-api-6fbd895b64-5mjx6                Container created
+8m55s       Normal   Pulled                  pod/gpu-telemetry-api-6fbd895b64-5mjx6                Container image "gpu-telemetry/api:dev" already present on machine and can be accessed by the pod
+8m55s       Normal   ScalingReplicaSet       deployment/gpu-telemetry-collector                    Scaled up replica set gpu-telemetry-collector-85b6879c97 from 0 to 1
+8m55s       Normal   Pulled                  pod/gpu-telemetry-queue-0                             Container image "gpu-telemetry/queue:dev" already present on machine and can be accessed by the pod
+8m55s       Normal   Created                 pod/gpu-telemetry-queue-0                             Container created
+8m55s       Normal   Started                 pod/gpu-telemetry-queue-0                             Container started
+8m55s       Normal   ExternalProvisioning    persistentvolumeclaim/gpu-telemetry-queue-data        Waiting for a volume to be created either by the external provisioner 'k8s.io/minikube-hostpath' or manually by the system administrator. If volume creation is delayed, please verify that the provisioner is running and correctly registered.
+8m55s       Normal   Provisioning            persistentvolumeclaim/gpu-telemetry-queue-data        External provisioner is provisioning volume for claim "gpu-telemetry-day5/gpu-telemetry-queue-data"
+8m55s       Normal   ProvisioningSucceeded   persistentvolumeclaim/gpu-telemetry-queue-data        Successfully provisioned volume pvc-deede32a-87f3-468c-868e-9bbd07f0dd6b
+8m55s       Normal   SuccessfulCreate        statefulset/gpu-telemetry-queue                       Create Pod gpu-telemetry-queue-0 in StatefulSet gpu-telemetry-queue successful
+8m55s       Normal   Scheduled               pod/gpu-telemetry-streamer-cbff6c649-hkzx9            Successfully assigned gpu-telemetry-day5/gpu-telemetry-streamer-cbff6c649-hkzx9 to gpu-telemetry
+8m55s       Normal   Pulled                  pod/gpu-telemetry-streamer-cbff6c649-hkzx9            Container image "gpu-telemetry/streamer:dev" already present on machine and can be accessed by the pod
+8m55s       Normal   Created                 pod/gpu-telemetry-streamer-cbff6c649-hkzx9            Container created
+8m55s       Normal   Started                 pod/gpu-telemetry-streamer-cbff6c649-hkzx9            Container started
+8m55s       Normal   SuccessfulCreate        replicaset/gpu-telemetry-streamer-cbff6c649           Created pod: gpu-telemetry-streamer-cbff6c649-hkzx9
+8m55s       Normal   ScalingReplicaSet       deployment/gpu-telemetry-streamer                     Scaled up replica set gpu-telemetry-streamer-cbff6c649 from 0 to 1
+
+
+===== Database event counts =====
+dhirajsriharsha@Dhirajs-MacBook-Air ProjectMsgQueue % kubectl exec "gpu-telemetry-postgresql-0" -- sh -c 'psql -U "$POSTGRES_USER" -d "$POSTGRES_DB" -At -c "SELECT count(*) AS events, count(DISTINCT event_id) AS unique_events FROM telemetry"'
+Error from server (NotFound): pods "gpu-telemetry-postgresql-0" not found
+dhirajsriharsha@Dhirajs-MacBook-Air ProjectMsgQueue % 
+dhirajsriharsha@Dhirajs-MacBook-Air ProjectMsgQueue % kubectl exec "gpu-telemetry-postgresql-0" -- sh -c 'psql -U "$POSTGRES_USER" -d "$POSTGRES_DB" -At -c "SELECT count(*) AS events, count(DISTINCT event_id) AS unique_events FROM telemetry"' -n gpu-telemetry-day5
+Error from server (NotFound): pods "gpu-telemetry-postgresql-0" not found
+dhirajsriharsha@Dhirajs-MacBook-Air ProjectMsgQueue % kubectl exec -n gpu-telemetry-day5 "gpu-telemetry-postgresql-0" -- sh -c 'psql -U "$POSTGRES_USER" -d "$POSTGRES_DB" -At -c "SELECT count(*) AS events, count(DISTINCT event_id) AS unique_events FROM telemetry"'                      
+7643|7643
+

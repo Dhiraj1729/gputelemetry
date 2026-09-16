@@ -1,0 +1,52 @@
+bash scripts/day5-verify.sh
+partitioned roll out complete: 1 new pods have been updated...
+partitioned roll out complete: 1 new pods have been updated...
+deployment "gpu-telemetry-streamer" successfully rolled out
+deployment "gpu-telemetry-collector" successfully rolled out
+deployment "gpu-telemetry-api" successfully rolled out
+job.batch/gpu-telemetry-migrate condition met
+NAME                                           READY   STATUS      RESTARTS   AGE
+pod/gpu-telemetry-api-6fbd895b64-rdqxg         1/1     Running     0          2m57s
+pod/gpu-telemetry-collector-85b6879c97-89kzv   1/1     Running     0          38s
+pod/gpu-telemetry-collector-85b6879c97-8sjwl   1/1     Running     0          38s
+pod/gpu-telemetry-collector-85b6879c97-cc5qj   1/1     Running     0          2m57s
+pod/gpu-telemetry-migrate-29nqx                0/1     Completed   0          41s
+pod/gpu-telemetry-postgresql-0                 1/1     Running     0          3m3s
+pod/gpu-telemetry-queue-0                      1/1     Running     0          2m57s
+pod/gpu-telemetry-streamer-cbff6c649-4mhjj     1/1     Running     0          2m57s
+pod/gpu-telemetry-streamer-cbff6c649-fc24x     1/1     Running     0          38s
+pod/gpu-telemetry-streamer-cbff6c649-sbdcg     1/1     Running     0          38s
+
+NAME                              STATUS     COMPLETIONS   DURATION   AGE
+job.batch/gpu-telemetry-migrate   Complete   1/1           3s         41s
+
+NAME                               TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)    AGE
+service/gpu-telemetry-api          ClusterIP   10.107.224.210   <none>        8080/TCP   2m57s
+service/gpu-telemetry-collector    ClusterIP   10.105.93.132    <none>        8082/TCP   2m57s
+service/gpu-telemetry-postgresql   ClusterIP   None             <none>        5432/TCP   3m3s
+service/gpu-telemetry-queue        ClusterIP   None             <none>        8081/TCP   2m57s
+
+NAME                                                  STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS   VOLUMEATTRIBUTESCLASS   AGE
+persistentvolumeclaim/gpu-telemetry-postgresql-data   Bound    pvc-b3bead5b-f8da-4208-8441-b0c3a47e580d   2Gi        RWO            standard       <unset>                 3m3s
+persistentvolumeclaim/gpu-telemetry-queue-data        Bound    pvc-7cc0f42a-1d17-4e47-ac8e-da39886d8970   1Gi        RWO            standard       <unset>                 2m57s
+migration 001 applied or already current
+{"status":"ok"}
+{"status":"ready"}
+ events | unique_events 
+--------+---------------
+   2545 |          2545
+(1 row)
+
+Found 3 pods, using pod/gpu-telemetry-streamer-cbff6c649-4mhjj
+{"time":"2026-09-13T18:42:39.008041371Z","level":"WARN","msg":"publish retry","event_id":"4a81017511b3f8214818c800d7d4ecc1:0:1","retry":2,"error":"queue HTTP 0: Post \"http://gpu-telemetry-queue:8081/internal/v1/messages\": dial tcp: lookup gpu-telemetry-queue on 10.96.0.10:53: no such host"}
+{"time":"2026-09-13T18:42:39.194503498Z","level":"WARN","msg":"publish retry","event_id":"4a81017511b3f8214818c800d7d4ecc1:0:1","retry":3,"error":"queue HTTP 0: Post \"http://gpu-telemetry-queue:8081/internal/v1/messages\": dial tcp: lookup gpu-telemetry-queue on 10.96.0.10:53: no such host"}
+{"time":"2026-09-13T18:42:39.582817501Z","level":"WARN","msg":"publish retry","event_id":"4a81017511b3f8214818c800d7d4ecc1:0:1","retry":4,"error":"queue HTTP 0: Post \"http://gpu-telemetry-queue:8081/internal/v1/messages\": dial tcp: lookup gpu-telemetry-queue on 10.96.0.10:53: no such host"}
+{"time":"2026-09-13T18:42:40.365086081Z","level":"WARN","msg":"publish retry","event_id":"4a81017511b3f8214818c800d7d4ecc1:0:1","retry":5,"error":"queue HTTP 0: Post \"http://gpu-telemetry-queue:8081/internal/v1/messages\": dial tcp: lookup gpu-telemetry-queue on 10.96.0.10:53: no such host"}
+{"time":"2026-09-13T18:42:41.66396803Z","level":"WARN","msg":"publish retry","event_id":"4a81017511b3f8214818c800d7d4ecc1:0:1","retry":6,"error":"queue HTTP 0: Post \"http://gpu-telemetry-queue:8081/internal/v1/messages\": dial tcp: lookup gpu-telemetry-queue on 10.96.0.10:53: no such host"}
+Found 3 pods, using pod/gpu-telemetry-collector-85b6879c97-cc5qj
+{"time":"2026-09-13T18:45:37.721535926Z","level":"INFO","msg":"telemetry committed","event_id":"65b54e82c5b9ba8d35830465f39458d9:0:401","attempt":1}
+{"time":"2026-09-13T18:45:37.822161684Z","level":"INFO","msg":"telemetry committed","event_id":"65b54e82c5b9ba8d35830465f39458d9:0:402","attempt":1}
+{"time":"2026-09-13T18:45:37.924852664Z","level":"INFO","msg":"telemetry committed","event_id":"65b54e82c5b9ba8d35830465f39458d9:0:403","attempt":1}
+{"time":"2026-09-13T18:45:38.02344191Z","level":"INFO","msg":"telemetry committed","event_id":"65b54e82c5b9ba8d35830465f39458d9:0:404","attempt":1}
+{"time":"2026-09-13T18:45:38.122575743Z","level":"INFO","msg":"telemetry committed","event_id":"65b54e82c5b9ba8d35830465f39458d9:0:405","attempt":1}
+PASS: PVCs bound, migration complete, API data present, queue ACKs observed, queue replicas=1.

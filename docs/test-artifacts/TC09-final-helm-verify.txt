@@ -1,0 +1,46 @@
+bash scripts/day5-verify.sh
+partitioned roll out complete: 1 new pods have been updated...
+partitioned roll out complete: 1 new pods have been updated...
+deployment "gpu-telemetry-streamer" successfully rolled out
+deployment "gpu-telemetry-collector" successfully rolled out
+deployment "gpu-telemetry-api" successfully rolled out
+job.batch/gpu-telemetry-migrate condition met
+NAME                                           READY   STATUS      RESTARTS   AGE
+pod/gpu-telemetry-api-6fbd895b64-g5phw         1/1     Running     0          13m
+pod/gpu-telemetry-collector-85b6879c97-m7kpx   1/1     Running     0          3m46s
+pod/gpu-telemetry-migrate-9tjsn                0/1     Completed   0          68s
+pod/gpu-telemetry-postgresql-0                 1/1     Running     0          14m
+pod/gpu-telemetry-queue-0                      1/1     Running     0          8m18s
+pod/gpu-telemetry-streamer-cbff6c649-cw68z     1/1     Running     0          13m
+
+NAME                              STATUS     COMPLETIONS   DURATION   AGE
+job.batch/gpu-telemetry-migrate   Complete   1/1           2s         68s
+
+NAME                               TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)    AGE
+service/gpu-telemetry-api          ClusterIP   10.102.249.73    <none>        8080/TCP   13m
+service/gpu-telemetry-collector    ClusterIP   10.109.198.149   <none>        8082/TCP   13m
+service/gpu-telemetry-postgresql   ClusterIP   None             <none>        5432/TCP   14m
+service/gpu-telemetry-queue        ClusterIP   None             <none>        8081/TCP   13m
+
+NAME                                                  STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS   VOLUMEATTRIBUTESCLASS   AGE
+persistentvolumeclaim/gpu-telemetry-postgresql-data   Bound    pvc-ad1a07de-3965-4e01-9763-b7b68949b9ee   2Gi        RWO            standard       <unset>                 14m
+persistentvolumeclaim/gpu-telemetry-queue-data        Bound    pvc-c9ccd9fc-84e2-49b4-bcbe-cc552b9584d1   1Gi        RWO            standard       <unset>                 13m
+migration 001 applied or already current
+{"status":"ok"}
+{"status":"ready"}
+ events | unique_events 
+--------+---------------
+   8256 |          8256
+(1 row)
+
+{"time":"2026-09-13T19:37:49.455690152Z","level":"WARN","msg":"publish retry","event_id":"a5e05fe2303233419db2b1573ab1047a:1:866","retry":9,"error":"queue HTTP 0: Post \"http://gpu-telemetry-queue:8081/internal/v1/messages\": dial tcp: lookup gpu-telemetry-queue on 10.96.0.10:53: no such host"}
+{"time":"2026-09-13T19:37:49.746460278Z","level":"WARN","msg":"publish retry","event_id":"a5e05fe2303233419db2b1573ab1047a:1:866","retry":10,"error":"queue HTTP 0: Post \"http://gpu-telemetry-queue:8081/internal/v1/messages\": dial tcp: lookup gpu-telemetry-queue on 10.96.0.10:53: no such host"}
+{"time":"2026-09-13T19:37:50.190678915Z","level":"WARN","msg":"publish retry","event_id":"a5e05fe2303233419db2b1573ab1047a:1:866","retry":11,"error":"queue HTTP 0: Post \"http://gpu-telemetry-queue:8081/internal/v1/messages\": dial tcp: lookup gpu-telemetry-queue on 10.96.0.10:53: no such host"}
+{"time":"2026-09-13T19:37:51.753879274Z","level":"WARN","msg":"publish retry","event_id":"a5e05fe2303233419db2b1573ab1047a:1:866","retry":12,"error":"queue HTTP 0: Post \"http://gpu-telemetry-queue:8081/internal/v1/messages\": dial tcp: lookup gpu-telemetry-queue on 10.96.0.10:53: no such host"}
+{"time":"2026-09-13T19:37:52.947274994Z","level":"WARN","msg":"publish retry","event_id":"a5e05fe2303233419db2b1573ab1047a:1:866","retry":13,"error":"queue HTTP 0: Post \"http://gpu-telemetry-queue:8081/internal/v1/messages\": dial tcp: lookup gpu-telemetry-queue on 10.96.0.10:53: no such host"}
+{"time":"2026-09-13T19:46:09.524898687Z","level":"INFO","msg":"telemetry committed","event_id":"a5e05fe2303233419db2b1573ab1047a:3:842","attempt":1}
+{"time":"2026-09-13T19:46:09.623411326Z","level":"INFO","msg":"telemetry committed","event_id":"a5e05fe2303233419db2b1573ab1047a:3:843","attempt":1}
+{"time":"2026-09-13T19:46:09.72481861Z","level":"INFO","msg":"telemetry committed","event_id":"a5e05fe2303233419db2b1573ab1047a:3:844","attempt":1}
+{"time":"2026-09-13T19:46:09.824044295Z","level":"INFO","msg":"telemetry committed","event_id":"a5e05fe2303233419db2b1573ab1047a:3:845","attempt":1}
+{"time":"2026-09-13T19:46:09.923305231Z","level":"INFO","msg":"telemetry committed","event_id":"a5e05fe2303233419db2b1573ab1047a:3:846","attempt":1}
+PASS: PVCs bound, migration complete, API data present, queue ACKs observed, queue replicas=1.

@@ -1,0 +1,24 @@
+===== TC04 scaled state: 3 streamers / 3 collectors =====
+NAME                                      READY   UP-TO-DATE   AVAILABLE   AGE     CONTAINERS   IMAGES                        SELECTOR
+deployment.apps/gpu-telemetry-api         1/1     1            1           3m17s   api          gpu-telemetry/api:dev         app.kubernetes.io/component=api,app.kubernetes.io/instance=gpu-telemetry,app.kubernetes.io/name=gpu-telemetry
+deployment.apps/gpu-telemetry-collector   3/3     3            3           3m17s   collector    gpu-telemetry/collector:dev   app.kubernetes.io/component=collector,app.kubernetes.io/instance=gpu-telemetry,app.kubernetes.io/name=gpu-telemetry
+deployment.apps/gpu-telemetry-streamer    3/3     3            3           3m17s   streamer     gpu-telemetry/streamer:dev    app.kubernetes.io/component=streamer,app.kubernetes.io/instance=gpu-telemetry,app.kubernetes.io/name=gpu-telemetry
+
+NAME                                        READY   AGE     CONTAINERS   IMAGES
+statefulset.apps/gpu-telemetry-postgresql   1/1     3m23s   postgresql   postgres:18.6@sha256:4ef4dbc939d61acea57712655ddb4b4ab27419c913f94cca0cd57cb3ea3c2280
+statefulset.apps/gpu-telemetry-queue        1/1     3m17s   queue        gpu-telemetry/queue:dev
+
+NAME                                           READY   STATUS      RESTARTS   AGE     IP            NODE            NOMINATED NODE   READINESS GATES
+pod/gpu-telemetry-api-6fbd895b64-rdqxg         1/1     Running     0          3m17s   10.244.0.18   gpu-telemetry   <none>           <none>
+pod/gpu-telemetry-collector-85b6879c97-89kzv   1/1     Running     0          58s     10.244.0.23   gpu-telemetry   <none>           <none>
+pod/gpu-telemetry-collector-85b6879c97-8sjwl   1/1     Running     0          58s     10.244.0.22   gpu-telemetry   <none>           <none>
+pod/gpu-telemetry-collector-85b6879c97-cc5qj   1/1     Running     0          3m17s   10.244.0.16   gpu-telemetry   <none>           <none>
+pod/gpu-telemetry-migrate-29nqx                0/1     Completed   0          61s     10.244.0.20   gpu-telemetry   <none>           <none>
+pod/gpu-telemetry-postgresql-0                 1/1     Running     0          3m23s   10.244.0.14   gpu-telemetry   <none>           <none>
+pod/gpu-telemetry-queue-0                      1/1     Running     0          3m17s   10.244.0.19   gpu-telemetry   <none>           <none>
+pod/gpu-telemetry-streamer-cbff6c649-4mhjj     1/1     Running     0          3m17s   10.244.0.17   gpu-telemetry   <none>           <none>
+pod/gpu-telemetry-streamer-cbff6c649-fc24x     1/1     Running     0          58s     10.244.0.24   gpu-telemetry   <none>           <none>
+pod/gpu-telemetry-streamer-cbff6c649-sbdcg     1/1     Running     0          58s     10.244.0.21   gpu-telemetry   <none>           <none>
+NAME                            STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS   VOLUMEATTRIBUTESCLASS   AGE
+gpu-telemetry-postgresql-data   Bound    pvc-b3bead5b-f8da-4208-8441-b0c3a47e580d   2Gi        RWO            standard       <unset>                 3m23s
+gpu-telemetry-queue-data        Bound    pvc-7cc0f42a-1d17-4e47-ac8e-da39886d8970   1Gi        RWO            standard       <unset>                 3m17s

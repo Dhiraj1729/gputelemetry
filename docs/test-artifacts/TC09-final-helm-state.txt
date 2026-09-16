@@ -1,0 +1,17 @@
+===== TC09 Helm release summary =====
+Mon Sep 14 01:16:47 IST 2026
+
+Release list:
+NAME         	NAMESPACE         	REVISION	UPDATED                             	STATUS  	CHART              	APP VERSION
+gpu-telemetry	gpu-telemetry-day5	3       	2026-09-14 01:14:58.932349 +0530 IST	deployed	gpu-telemetry-0.1.0	1.0.0      
+
+Effective Helm values:
+USER-SUPPLIED VALUES:
+bootstrapOnly: false
+collector:
+  replicas: 1
+images:
+  repository: gpu-telemetry
+  tag: dev
+streamer:
+  replicas: 1

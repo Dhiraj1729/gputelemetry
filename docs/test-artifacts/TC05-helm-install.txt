@@ -1,0 +1,33 @@
+bash scripts/helm-install.sh
+NAME: gpu-telemetry
+LAST DEPLOYED: Mon Sep 14 22:17:59 2026
+NAMESPACE: gpu-telemetry-day5
+STATUS: deployed
+REVISION: 1
+DESCRIPTION: Install complete
+TEST SUITE: None
+NOTES:
+Database bootstrap phase only. Wait for PostgreSQL, then complete installation:
+  helm upgrade gpu-telemetry deploy/helm/gpu-telemetry -n gpu-telemetry-day5 --reuse-values --set bootstrapOnly=false --wait --timeout 5m
+Prefer make helm-install: it runs both phases with an explicit Kubernetes context.
+
+Queue replicas are fixed at one. PVCs and generated database credentials are retained on uninstall.
+Do not delete the namespace if you intend to retain those resources.
+partitioned roll out complete: 1 new pods have been updated...
+Release "gpu-telemetry" has been upgraded. Happy Helming!
+NAME: gpu-telemetry
+LAST DEPLOYED: Mon Sep 14 22:18:01 2026
+NAMESPACE: gpu-telemetry-day5
+STATUS: deployed
+REVISION: 2
+DESCRIPTION: Upgrade complete
+TEST SUITE: None
+NOTES:
+Pipeline installed. API access:
+  kubectl -n gpu-telemetry-day5 port-forward service/gpu-telemetry-api 8080:8080
+  curl -fsS http://127.0.0.1:8080/api/v1/gpus
+Migration evidence: kubectl -n gpu-telemetry-day5 logs job/gpu-telemetry-migrate
+
+Queue replicas are fixed at one. PVCs and generated database credentials are retained on uninstall.
+Do not delete the namespace if you intend to retain those resources.
+job.batch/gpu-telemetry-migrate condition met
